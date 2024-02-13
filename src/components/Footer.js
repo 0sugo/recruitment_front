@@ -26,8 +26,8 @@ const Footer = () => {
   ];
 
   return (
-    <div className="app min-h-screen flex items-end justify-center font-poppins">
-      <div className="py-16 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 bg-[#000000] text-white w-full p-4 relative">
+    <div className="app flex items-end justify-center font-poppins">
+      <div className="pt-4 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 bg-[#000000] text-white w-full p-4 relative">
         <div className="  ">
           <div className="footer-img flex items-center">
             <img
