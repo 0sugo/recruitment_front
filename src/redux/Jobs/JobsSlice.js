@@ -6,7 +6,7 @@ const initialState = {
   isLoading: false,
 };
 
-const url = 'https://finalspaceapi.com/api/v0/episode/';
+const url = 'https://magicalfurnitures.co.ke/recruitment/public/api/getJobs';
 
 export const fetchJobs = createAsyncThunk('fetch/Jobs', async () => {
   try {
@@ -30,7 +30,6 @@ const JobsSlice = createSlice({
       .addCase(fetchJobs.fulfilled, (state, action) => {
         state.isLoading = false;
         state.AllJobs = action.payload;
-        // console.log(action.payload)
       })
       .addCase(fetchJobs.rejected, (state) => {
         state.isLoading = false;
