@@ -97,7 +97,7 @@ const Jobs = () => {
       ) : (
         <ul>
           {AllJobs.map((job) => (
-            <li key={job.id}>{job.name}</li>
+            <li key={job.id}>{job.id} - {job.id} -{job.ref_no}</li>
           ))}
         </ul>
       )}
