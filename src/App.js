@@ -12,6 +12,13 @@ import AcademicQualification from './components/AcademicQualification';
 import Jobs from './components/Jobs';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import Admin from './components/Admin';
+import Options from './components/Options';
+import Applications from './components/Applications';
+import AllApplications from './components/AllApplications';
+import ShortlistedApplications from './components/ShortlistedApplications';
+import RejectedApplications from './components/RejectedApplications';
+import LeaveForm from './components/LeaveForm';
 
 function App() {
   return (
@@ -29,6 +36,13 @@ function App() {
         <Route path="/Available-jobs" element={< Jobs/>} />
         <Route path="/Register" element={< RegisterPage/>} />
         <Route path="/Login" element={< LoginPage/>} />
+        <Route path="/Admin" element={< Admin/>} />
+        <Route path="/Options" element={< Options/>} />
+        <Route path="/Applications" element={< Applications/>} />
+        <Route path="/Shortlisted-Applications" element={< ShortlistedApplications/>} />
+        <Route path="/Rejected-Applications" element={< RejectedApplications/>} />
+        <Route path="/All-Applications" element={< AllApplications/>} />
+        <Route path="/Leave-Management" element={< LeaveForm/>} />
       </Routes>
 
       {/* <Footer /> */}
