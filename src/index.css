@@ -38,3 +38,15 @@ code {
 th,tr:nth-child(even) {
   background-color: #f8f6f6;
 }
+
+.leave-template {
+  display: none;
+}
+
+@media print {
+  .leave-template {
+    display: block;
+  }
+}
+
+
