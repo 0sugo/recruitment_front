@@ -16,7 +16,6 @@ const AllApplications = () => {
     dispatch(fetchAllApplications());
   }, [dispatch]);
 
-  // Pagination
   const indexOfLastApplication = currentPage * applicationsPerPage;
   const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
   const currentApplications = AllApplications.slice(indexOfFirstApplication, indexOfLastApplication);
