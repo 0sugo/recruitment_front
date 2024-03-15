@@ -1,20 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
   AllJobs: [],
   isLoading: false,
 };
 
-const url = 'https://magicalfurnitures.co.ke/recruitment/public/api/getJobs';
+const url = 'https://Sir.magicalfurnitures.co.ke/api';
 
 export const fetchJobs = createAsyncThunk('fetch/Jobs', async () => {
   try {
-    const response = await axios(url);
+    const response = await axios.get(`${url}/getJobs`);
     const resp = response.data;
-    console.log(resp);
     return resp;
   } catch (error) {
+    throw new Error(error);
+  }
+});
+
+export const postJob = createAsyncThunk('post/Job', async (jobData) => {
+  try {
+    const response = await axios.post(`${url}/postJobs`, jobData);
+    const resp = response.data;
+    toast.success('Job posted Successfully');
+    return resp;
+  } catch (error) {
+    toast.error('Job NOT posted');
     throw new Error(error);
   }
 });
@@ -32,6 +45,16 @@ const JobsSlice = createSlice({
         state.AllJobs = action.payload;
       })
       .addCase(fetchJobs.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(postJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(postJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.AllJobs = [...state.AllJobs, action.payload];
+      })
+      .addCase(postJob.rejected, (state) => {
         state.isLoading = false;
       });
   },
