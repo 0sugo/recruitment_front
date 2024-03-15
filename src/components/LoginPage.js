@@ -1,10 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading, setError, setToken, logout, selectExpiration } from '../redux/Login/authSlice';
+import { login as loginAction, selectIsAuthenticated } from '../redux/Login/authSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  // const loading = useSelector(authLoading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
+  const expiration = useSelector(selectExpiration);
 
-  const [jobId, setJobId] = useState('');
+  const [job_id, setJob_id] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -15,11 +25,59 @@ const LoginPage = () => {
     }
   }, []);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setLoading());
 
+    try {
+      const token = await dispatch(loginAction(job_id, password));
+      dispatch(setToken({ token, expiration: calculateExpiration() }));
+      localStorage.setItem('token', token);
 
-  }
+      toast.success('Login successful');
+      navigate('/available-jobs');
+    } catch (error) {
+      dispatch(setError(error.message));
+
+      if (error.response && error.response.data && error.response.data.message === 'Unauthorized') {
+        toast.error('Incorrect password or Username. Please try again.');
+      } else {
+        toast.error('Login failed. Please try again.');
+      }
+    }
+  };
+
+    // Calculate expiration time (e.g., 1 hour from now)
+    const calculateExpiration = () => {
+      const expirationTime = new Date();
+      expirationTime.setTime(expirationTime.getTime() + 60000); // Adjust as needed
+      return expirationTime;
+    };
+
+    // Set up session timeout timer
+    useEffect(() => {
+      const expirationTimer = setTimeout(() => {
+        dispatch(logout());
+        localStorage.removeItem('token');
+        toast.warning('Session expired. Please log in again.');
+        navigate('/login'); // Redirect to login page after session timeout
+      }, calculateTimeoutDuration());
+
+      // Clear the timer on component unmount or successful login
+      return () => clearTimeout(expirationTimer);
+      console.log('Expiration Timer Cleared');
+    }, [dispatch, navigate]);
+
+    // Calculate the timeout duration (time until expiration)
+    const calculateTimeoutDuration = () => {
+      const now = new Date();
+      console.log('Expiration:', expiration);
+      const expirationTime = new Date(expiration);
+      const timeoutDuration = expirationTime.getTime() - now.getTime();
+      // console.log('Timeout Duration:', timeoutDuration);
+      return timeoutDuration;
+    };
 
   return (
     <div className='flex justify-center items-center mt-20'>
@@ -34,8 +92,8 @@ const LoginPage = () => {
             <input className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-2/3 shadow appearance-none  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text"
               placeholder="Enter your job Id"
-              value={jobId}
-              onChange={(e) => setJobId(e.target.value)}
+              value={job_id}
+              onChange={(e) => setJob_id(e.target.value)}
             />
           </div>
           <div className="mb-4 flex flex-nowrap gap-4 items-baseline justify-end">
