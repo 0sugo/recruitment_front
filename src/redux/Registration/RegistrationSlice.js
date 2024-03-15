@@ -10,7 +10,7 @@ const initialState = {
 export const registerUser = (userData) => async (dispatch) => {
 
   try {
-    const response = await axios.post('https://magicalfurnitures.co.ke/recruitment/public/api/register', userData);
+    const response = await axios.post('https://sir.magicalfurnitures.co.ke/api/register', userData);
 
     if ('failed' in response.data) {
 
@@ -21,7 +21,7 @@ export const registerUser = (userData) => async (dispatch) => {
 
       toast.success('Registration Successful');
       dispatch({ type: 'REGISTER_SUCCESS', payload: response.data });
-      
+
     }
   } catch (error) {
     toast.error('Registration Failed');
