@@ -54,7 +54,7 @@ const RegisterPage = () => {
           <div className="mb-4 flex flex-nowrap gap-4 items-baseline justify-end">
             <label className="mb-2 text-sm">Password :</label>
             <input
-              className="border p-2 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 w-2/3"
+              className="border p-2 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-2/3"
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
