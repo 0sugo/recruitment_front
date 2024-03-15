@@ -1,7 +1,31 @@
 import React from 'react'
 import Tabular from './Tabular'
+import { useDispatch } from 'react-redux';
+import { submitMembershipProfessionalBodies } from '../redux/Profile/memProfBodiesSlice';
 
 const MemProfBodies = () => {
+
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem('userId');
+
+  const [formData, setFormData] = React.useState({
+    professional_body: '',
+    membership_type: '',
+    certificate_no: '',
+    start_date: '',
+    end_date: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(submitMembershipProfessionalBodies({ userId, membershipProfessionalBodiesData: formData }));
+  };
+
   return (
     <div className='mt-8'>
       <Tabular />
@@ -12,7 +36,7 @@ const MemProfBodies = () => {
         <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
           <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white border-0">
             <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                   SECTION ONE: Membership Professional Bodies
                 </h6>
@@ -22,7 +46,9 @@ const MemProfBodies = () => {
                       <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                         Professional body
                       </label>
-                      <input type="text" required class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                      <input type="text" name="professional_body"
+                        value={formData.professional_body}
+                        onChange={handleChange} required class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                     </div>
                   </div>
 
@@ -32,7 +58,9 @@ const MemProfBodies = () => {
                       <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                         Membership type (e.g Associate)
                       </label>
-                      <input required type="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                      <input required name="membership_type"
+                        value={formData.membership_type}
+                        onChange={handleChange} type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                     </div>
                   </div>
                   <div class="w-full lg:w-4/12 px-6">
@@ -40,7 +68,9 @@ const MemProfBodies = () => {
                       <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                         Certificate No
                       </label>
-                      <input required type="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                      <input required type="text" name="certificate_no"
+                        value={formData.certificate_no}
+                        onChange={handleChange}class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                     </div>
                   </div>
 
@@ -53,6 +83,9 @@ const MemProfBodies = () => {
                       </label>
                       <input
                         type="date"
+                        name="start_date"
+                        value={formData.start_date}
+                        onChange={handleChange}
                         required
                         id="startDate"
                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -70,6 +103,9 @@ const MemProfBodies = () => {
                       <input
                         type="date"
                         required
+                        name="end_date"
+                        value={formData.end_date}
+                        onChange={handleChange}
                         id="endDate"
                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       />
