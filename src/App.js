@@ -19,12 +19,26 @@ import AllApplications from './components/AllApplications';
 import ShortlistedApplications from './components/ShortlistedApplications';
 import RejectedApplications from './components/RejectedApplications';
 import LeaveForm from './components/LeaveForm';
+import Output from './components/Output';
+import { useEffect, useState } from 'react';
+import Dashboard from './components/Dashboard';
 
 function App() {
+
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
+
   return (
     <div className="App">
-      <Header />
-      <Navbar />
+      {/* {userId === 'admin' ? <Admin /> : <Jobs />} */}
+      {/* <LoginPage /> */}
+      <Dashboard />
 
       <Routes>
         <Route path="/Personal-Details" element={< Profile/>} />

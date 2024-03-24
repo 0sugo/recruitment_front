@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Tabular from './Tabular';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postAcademicQualifications } from '../redux/Profile/academicSlice';
+import Output from './Output';
 
 const AcademicQualifications = () => {
 
@@ -73,7 +74,8 @@ const AcademicQualifications = () => {
     };
 
     return (
-        <div className='mt-8'>
+        <div className=''>
+            <Output />
             <Tabular />
 
             <h2 className='uppercase'>Academic Qualification</h2>
