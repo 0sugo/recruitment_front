@@ -23,6 +23,7 @@ export const registerUser = (userData) => async (dispatch) => {
       dispatch({ type: 'REGISTER_SUCCESS', payload: response.data });
 
     }
+    return response.data;
   } catch (error) {
     toast.error('Registration Failed');
     dispatch({ type: 'REGISTER_FAIL', payload: error.message });
