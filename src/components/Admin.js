@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postJob } from '../redux/Jobs/JobsSlice';
 import { fetchAllApplications } from '../redux/Applications/applicationsSlice';
 import { NavLink } from 'react-router-dom';
+import Output from './Output';
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const Admin = () => {
 
   return (
     <div className=''>
+      <Output />
+
       <section className="py-1 bg-slate-200 w-full lg:w-8/12 px-4 mx-auto mt-12 shadow-lg shadow-slate-400">
 
         <div class="question-wrap mx-8 mt-2">
