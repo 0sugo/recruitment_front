@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Tabular from './Tabular';
 import { useDispatch } from 'react-redux';
 import { postPersonalDetails } from '../redux/Profile/profileSlice';
+import Output from './Output';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -120,7 +121,9 @@ const handleSubmit = (e) => {
 
 
 return (
-  <div className='mt-8'>
+  <>
+  <Output />
+  <div className=''>
     <Tabular />
 
     <h2 className='uppercase'>Personal details of applicant</h2>
@@ -579,6 +582,7 @@ return (
       </div>
     </section>
   </div>
+  </>
 );
 };
 
