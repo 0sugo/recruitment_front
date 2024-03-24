@@ -10,7 +10,7 @@ export const login = (job_id, password) => async (dispatch) => {
     return response.data.id;
   } catch (error) {
     dispatch(setError(error.response ? error.response.data.message : 'An error occurred'));
-    throw error; // Rethrow the error to handle it in the component
+    throw error;
   }
 };
 
