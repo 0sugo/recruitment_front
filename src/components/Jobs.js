@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchJobs } from '../redux/Jobs/JobsSlice';
 import { applyForJob } from '../redux/Applications/apply';
+import Output from './Output';
 
 const Jobs = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const Jobs = () => {
   };
 
   return (
+    <>
+    <Output />
     <div className='m-4 rounded-lg w-full lg:w-8/12 mx-auto p-4'>
       <h1>AVAILABLE JOBS</h1>
       <div className='bg-white'>
@@ -62,6 +65,7 @@ const Jobs = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
