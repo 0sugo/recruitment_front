@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Tabular from './Tabular'
 import { useDispatch } from 'react-redux'
 import { submitQualification } from '../redux/Profile/profQualificationSlice'
+import Output from './Output'
 
 const ProfessionalQualification = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,9 @@ const ProfessionalQualification = () => {
   };
 
   return (
-    <div className='mt-8'>
+    <>
+    <Output />
+    <div className=''>
       <Tabular />
 
       <h2 className='uppercase'>Professional Qualification</h2>
@@ -120,6 +123,7 @@ const ProfessionalQualification = () => {
         </div>
       </section>
     </div>
+    </>
   )
 }
 
