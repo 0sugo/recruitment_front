@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Tabular from './Tabular'
 import { useDispatch } from 'react-redux';
 import { submitReferees } from '../redux/Profile/refereesSlice';
+import Output from './Output';
 
 const Referees = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,9 @@ const Referees = () => {
 
 
   return (
-    <div className='mt-8'>
+    <>
+    <Output />
+    <div className=''>
       <Tabular />
 
       <h2 className='uppercase'>Referees</h2>
@@ -174,6 +177,7 @@ const Referees = () => {
         </div>
       </section>
     </div>
+    </>
   )
 }
 
