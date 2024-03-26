@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setError, setToken, logout, selectExpiration } from '../redux/Login/authSlice';
 import { login as loginAction, selectIsAuthenticated } from '../redux/Login/authSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Output from './Output';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  // const loading = useSelector(authLoading);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const navigate = useNavigate();
   const expiration = useSelector(selectExpiration);
@@ -32,11 +32,19 @@ const LoginPage = () => {
 
     try {
       const token = await dispatch(loginAction(job_id, password));
+      console.log(token);
       dispatch(setToken({ token, expiration: calculateExpiration() }));
       localStorage.setItem('token', token);
+      localStorage.setItem('userId', token);
+
+      if (token === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/available-jobs');
+      }
 
       toast.success('Login successful');
-      navigate('/available-jobs');
+
     } catch (error) {
       dispatch(setError(error.message));
 
@@ -72,7 +80,6 @@ const LoginPage = () => {
     // Calculate the timeout duration (time until expiration)
     const calculateTimeoutDuration = () => {
       const now = new Date();
-      console.log('Expiration:', expiration);
       const expirationTime = new Date(expiration);
       const timeoutDuration = expirationTime.getTime() - now.getTime();
       // console.log('Timeout Duration:', timeoutDuration);
@@ -80,6 +87,8 @@ const LoginPage = () => {
     };
 
   return (
+    <>
+    <Output />
     <div className='flex justify-center items-center mt-20'>
       <div className='flex flex-col items-center bg-gray-100'>
         <form className="shadow-2xl rounded px-24 pb-6 mb-4" onSubmit={handleSubmit}>
@@ -129,6 +138,7 @@ const LoginPage = () => {
       </div>
 
     </div>
+    </>
 
 
   );
