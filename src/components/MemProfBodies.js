@@ -2,6 +2,7 @@ import React from 'react'
 import Tabular from './Tabular'
 import { useDispatch } from 'react-redux';
 import { submitMembershipProfessionalBodies } from '../redux/Profile/memProfBodiesSlice';
+import Output from './Output';
 
 const MemProfBodies = () => {
 
@@ -27,6 +28,8 @@ const MemProfBodies = () => {
   };
 
   return (
+    <>
+    <Output />
     <div className='mt-8'>
       <Tabular />
 
@@ -125,6 +128,7 @@ const MemProfBodies = () => {
         </div>
       </section>
     </div>
+    </>
   )
 }
 
