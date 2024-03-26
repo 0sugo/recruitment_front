@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllApplications, changeApplicationStatus, fetchUserDetails } from '../redux/Applications/applicationsSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Output from './Output';
 
 const RejectedApplication = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const RejectedApplication = () => {
 
   return (
     <div>
+      <Output />
       <div className='m-4 rounded-lg w-full lg:w-10/12 mx-auto p-4'>
         <h1>Rejected Applications</h1>
 
