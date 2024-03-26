@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { submitWorkExperience } from '../redux/Profile/workExperienceSlice';
 import Tabular from './Tabular';
+import Output from './Output';
 
 const WorkExperience = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,10 @@ const WorkExperience = () => {
   };
 
   return (
-    <div className='mt-8'>
+    <>
+    <Output />
+
+    <div className=''>
       <Tabular />
 
       <h2 className='uppercase'>Work Experience</h2>
@@ -131,6 +135,7 @@ const WorkExperience = () => {
         </div>
       </section>
     </div>
+    </>
   )
 }
 
