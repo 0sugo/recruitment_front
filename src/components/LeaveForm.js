@@ -19,8 +19,7 @@ const LeaveForm = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = React.useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [selectedComponent, setSelectedComponent] = useState(null); // State to keep track of the selected component
-
+  const [selectedComponent, setSelectedComponent] = useState('LeaveReport');
   const handleComponentSelect = (componentName) => {
     setSelectedComponent(componentName);
   };
@@ -101,16 +100,25 @@ const LeaveForm = () => {
 
 
       <div className='max-w-3/4 mx-auto border-b border-l b-2 border-gray-200 text-sm'>
-        <div className='flex mx-auto max-w-3/4 whitespace-nowrap gap-16 bg-slate-100'>
-          <div className='font-semibold text-sm flex gap-16 text-slate-600'>
-            <span className='flex items-center p-3 cursor-pointer' onClick={() => handleComponentSelect('LeaveReport')}>Leave Report</span>
-            <span className='flex items-center p-3 cursor-pointer' onClick={() => handleComponentSelect('PendingLeave')}>Pending Leave</span>
-            <span className='flex items-center p-3 cursor-pointer' onClick={() => handleComponentSelect('ApprovedLeave')}>Approved Leave</span>
-            <span className='flex items-center p-3 cursor-pointer' onClick={() => handleComponentSelect('RejectedLeave')}>Rejected Leave</span>
+        <div className='flex mx-auto max-w-3/4 whitespace-nowrap gap-16 bg-gray-100'>
+        <div className='font-semibold text-sm flex gap-16 text-slate-600'>
+            <span className={`flex items-center p-3 cursor-pointer ${selectedComponent === 'LeaveReport' ? 'underline animate-bounce text-black' : ''}`} onClick={() => handleComponentSelect('LeaveReport')}>Leave Summary</span>
+            <span className={`flex items-center p-3 cursor-pointer ${selectedComponent === 'PendingLeave' ? 'underline animate-bounce text-black' : ''}`} onClick={() => handleComponentSelect('PendingLeave')}>Pending Leave</span>
+            <span className={`flex items-center p-3 cursor-pointer ${selectedComponent === 'ApprovedLeave' ? 'underline animate-bounce text-black' : ''}`} onClick={() => handleComponentSelect('ApprovedLeave')}>Approved Leave</span>
+            <span className={`flex items-center p-3 cursor-pointer ${selectedComponent === 'RejectedLeave' ? 'underline animate-bounce text-black' : ''}`} onClick={() => handleComponentSelect('RejectedLeave')}>Rejected Leave</span>
           </div>
           <span className='bg-[#2E6C9D] p-3 text-white flex rounded-md items-center gap-2 cursor-pointer' onClick={() => setShowModal(true)}><HiOutlinePlus />Apply leave</span>
         </div>
-        <div className='content'>
+        <div className='content mt-4'>
+          <div className='flex flex-col items-start px-4 mb-4'>
+            <p className='mb-2 '>Leaves Taken already :</p>
+              <div className='flex justify-between w-full'>
+                <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Annual leave: 10 / 45</p>
+                <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Sick leave: 1 / 10</p>
+                <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Bereavement leave: 0 / 10</p>
+                <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Total: 11 / 65</p>
+              </div>
+          </div>
 
           {selectedComponent === 'LeaveReport' && <LeaveReport />}
           {selectedComponent === 'PendingLeave' && <PendingLeave />}
