@@ -7,13 +7,25 @@ import NavigationBar from './NavigationBar';
 import Header from './Header';
 import LeaveForm from './LeaveForm';
 import { BsFillPersonFill } from "react-icons/bs";
+import Profile from './profile';
+import AcademicQualifications from './AcademicQualification';
+import ProfessionalQualification from './ProfessionalQualification';
+import MemProfBodies from './MemProfBodies';
+import WorkExperience from './WorkExperience';
+import Referees from './Referees';
+import ProfNav from './ProfNav';
 
 const Dashboard = () => {
   const [selectedNavItem, setSelectedNavItem] = useState(null);
+  const [selectedNav2Item, setSelectedNav2Item] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleNavItemSelect = (item) => {
     setSelectedNavItem(item);
+  };
+
+  const handleNav2ItemSelect = (item) => {
+    setSelectedNav2Item(item);
   };
 
   return (
@@ -36,7 +48,17 @@ const Dashboard = () => {
             </div>
           </div>
           <div className={` font-light ${isOpen ? 'w-10/12' : 'w-11/12'}`}>
+          {/* {selectedNavItem === 'Profile' && <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />} */}
+
+            <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />
             {selectedNavItem === 'Leave Application' && <LeaveForm />}
+            {selectedNavItem === 'Profile' && <Profile isOpen={isOpen} />}
+            {selectedNav2Item === 'Profile' && <Profile isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
+            {selectedNav2Item === 'academic' && <AcademicQualifications isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
+            {selectedNav2Item === 'professionalQualification' && <ProfessionalQualification isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
+            {selectedNav2Item === 'professionalBody' && <MemProfBodies isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
+            {selectedNav2Item === 'workExperience' && <WorkExperience isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
+            {selectedNav2Item === 'referees' && <Referees isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
           </div>
         </div>
       </div>
