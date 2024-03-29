@@ -35,9 +35,9 @@ const Referees = () => {
 
   return (
     <>
-    <Output />
+    {/* <Output /> */}
     <div className=''>
-      <Tabular />
+      {/* <Tabular /> */}
 
       <h2 className='uppercase'>Referees</h2>
 
