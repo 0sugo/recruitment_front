@@ -75,8 +75,8 @@ const AcademicQualifications = () => {
 
     return (
         <div className=''>
-            <Output />
-            <Tabular />
+            {/* <Output /> */}
+            {/* <Tabular /> */}
 
             <h2 className='uppercase'>Academic Qualification</h2>
 
