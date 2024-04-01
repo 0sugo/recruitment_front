@@ -61,7 +61,8 @@ th,tr:nth-child(even) {
   left: 0;
   width: 56px;
   height: 100%;
-  background: #4f2cd4;
+  /* background: #4f2cd4; */
+  background: #2E6C9D;
   transition: width 0.4s;
 }
 
