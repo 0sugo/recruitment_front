@@ -35,8 +35,8 @@ const Dashboard = () => {
         <NavigationBar onNavItemSelect={handleNavItemSelect} isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className={`flex flex-col flex-grow bg-neutral-50 h-full ${isOpen ? 'relative left-56 transition-all' : 'relative left-14 transition-all'}`}>
           {/* <div className='flex flex-col flex-grow bg-neutral-50 h-full relative left-56 '> */}
-          <div className={`flex bg-white ${isOpen ? '':''}`}>
-            <div className={`flex justify-between flex-grow-0 flex-shrink-0  items-center px-6 py-2 ${isOpen ? 'w-9/12 transition-all':'w-10/12 transition-all'} `}>
+          <div className={`flex bg-white ${isOpen ? '' : ''}`}>
+            <div className={`flex justify-between flex-grow-0 flex-shrink-0  items-center px-6 py-2 ${isOpen ? 'w-9/12 transition-all' : 'w-10/12 transition-all'} `}>
               {/* <MdOutlineSort className='size-6' /> */}
               <img src={banner} alt='banner' className='w-96' />
               <BsBell className='size-5' />
@@ -48,17 +48,14 @@ const Dashboard = () => {
             </div>
           </div>
           <div className={` font-light ${isOpen ? 'w-10/12' : 'w-11/12'}`}>
-          {/* {selectedNavItem === 'Profile' && <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />} */}
-
-            <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />
+            {selectedNavItem === 'Profile' && <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />}
             {selectedNavItem === 'Leave Application' && <LeaveForm />}
-            {selectedNavItem === 'Profile' && <Profile isOpen={isOpen} />}
-            {selectedNav2Item === 'Profile' && <Profile isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
-            {selectedNav2Item === 'academic' && <AcademicQualifications isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
-            {selectedNav2Item === 'professionalQualification' && <ProfessionalQualification isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
-            {selectedNav2Item === 'professionalBody' && <MemProfBodies isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
-            {selectedNav2Item === 'workExperience' && <WorkExperience isOpen={isOpen} selectedNav2Item={selectedNav2Item}/>}
-            {selectedNav2Item === 'referees' && <Referees isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
+            {selectedNavItem === 'Profile' && selectedNav2Item === 'Profile' && <Profile isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
+            {selectedNavItem === 'Profile' && selectedNav2Item === 'academic' && <AcademicQualifications isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
+            {selectedNavItem === 'Profile' && selectedNav2Item === 'professionalQualification' && <ProfessionalQualification isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
+            {selectedNavItem === 'Profile' && selectedNav2Item === 'professionalBody' && <MemProfBodies isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
+            {selectedNavItem === 'Profile' && selectedNav2Item === 'workExperience' && <WorkExperience isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
+            {selectedNavItem === 'Profile' && selectedNav2Item === 'referees' && <Referees isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
           </div>
         </div>
       </div>
