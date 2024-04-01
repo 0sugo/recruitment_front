@@ -17,7 +17,7 @@ import ProfNav from './ProfNav';
 
 const Dashboard = () => {
   const [selectedNavItem, setSelectedNavItem] = useState(null);
-  const [selectedNav2Item, setSelectedNav2Item] = useState(null);
+  const [selectedNav2Item, setSelectedNav2Item] = useState('Profile');
   const [isOpen, setIsOpen] = useState(false);
 
   const handleNavItemSelect = (item) => {
