@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setError, setToken, logout, selectExpiration } from '../redux/Login/authSlice';
 import { login as loginAction, selectIsAuthenticated } from '../redux/Login/authSlice';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Output from './Output';
 
@@ -69,7 +69,7 @@ const LoginPage = () => {
         dispatch(logout());
         localStorage.removeItem('token');
         toast.warning('Session expired. Please log in again.');
-        navigate('/login'); // Redirect to login page after session timeout
+        navigate('/login'); 
       }, calculateTimeoutDuration());
 
       // Clear the timer on component unmount or successful login
