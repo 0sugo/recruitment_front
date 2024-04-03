@@ -33,21 +33,19 @@ const WorkExperience = () => {
       <div className=''>
         {/* <Tabular /> */}
 
-        <h2 className='uppercase'>Work Experience</h2>
-
         <section className="py-1 bg-blueGray-50">
-          <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
+          <div className="w-full lg:w-10/12 px-4 mx-auto mt-6">
             <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white border-0">
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <form onSubmit={handleSubmit}>
-                  <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    SECTION ONE: Work Experience
+                <h6 class="text-blueGray-400 text-sm mt-3 mb-6 uppercase">
+                    <span className='font-bold'>SECTION six: </span>Personal Details
                   </h6>
                   <div className="flex flex-wrap">
                     <div className="w-full lg:w-6/12 px-6">
                       <div className="w-full mb-3">
-                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="designation">
-                          Designation/Position
+                        <label className="block uppercase text-blueGray-600 text-xs mb-2" htmlFor="designation">
+                          Designation/Position :
                         </label>
                         <input
                           type="text"
@@ -62,8 +60,8 @@ const WorkExperience = () => {
 
                     <div className="w-full lg:w-6/12 px-6">
                       <div className="w-full mb-3">
-                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="NCDA">
-                          Job Group
+                        <label className="block uppercase text-blueGray-600 text-xs mb-2" htmlFor="NCDA">
+                          Job Group :
                         </label>
                         <input
                           type="text"
@@ -79,8 +77,8 @@ const WorkExperience = () => {
 
                     <div className="w-full lg:w-6/12 px-6">
                       <div className="w-full mb-3">
-                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="NCDA">
-                          NCDA
+                        <label className="block uppercase text-blueGray-600 text-xs mb-2" htmlFor="NCDA">
+                          NCDA :
                         </label>
                         <input
                           type="text"
@@ -95,8 +93,8 @@ const WorkExperience = () => {
 
                     <div className="w-full lg:w-6/12 px-6">
                       <div className="w-full mb-3">
-                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="startDate">
-                          Start Date
+                        <label className="block uppercase text-blueGray-600 text-xs mb-2" htmlFor="startDate">
+                          Start Date :
                         </label>
                         <input
                           type="date"
@@ -111,8 +109,8 @@ const WorkExperience = () => {
 
                     <div className="w-full lg:w-6/12 px-6">
                       <div className="w-full mb-3">
-                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="endDate">
-                          End Date
+                        <label className="block uppercase text-blueGray-600 text-xs mb-2" htmlFor="endDate">
+                          End Date :
                         </label>
                         <input
                           type="date"
