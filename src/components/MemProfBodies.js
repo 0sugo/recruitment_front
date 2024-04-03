@@ -94,7 +94,6 @@ const MemProfBodies = () => {
                       </div>
                     </div>
 
-
                     {/* End Date */}
                     <div class="w-full lg:w-6/12 px-6">
                       <div class="w-full mb-3">
