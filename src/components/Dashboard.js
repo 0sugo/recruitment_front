@@ -47,6 +47,7 @@ const Dashboard = () => {
               <p>Susan</p>
             </div>
           </div>
+
           <div className={` font-light ${isOpen ? 'w-10/12' : 'w-11/12'}`}>
             {selectedNavItem === 'Profile' && <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />}
             {selectedNavItem === 'Leave Application' && <LeaveForm />}
