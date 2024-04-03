@@ -115,7 +115,7 @@ const LeaveForm = () => {
               <div className='flex justify-between w-full'>
                 <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Annual leave: 10 / 45</p>
                 <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Sick leave: 1 / 10</p>
-                <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Bereavement leave: 0 / 10</p>
+                <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Compassionate leave: 0 / 10</p>
                 <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Total: 11 / 65</p>
               </div>
           </div>
