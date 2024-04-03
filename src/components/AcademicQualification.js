@@ -78,21 +78,20 @@ const AcademicQualifications = () => {
             {/* <Output /> */}
             {/* <Tabular /> */}
 
-            <h2 className='uppercase'>Academic Qualification</h2>
 
             <section className="py-1 bg-blueGray-50">
-                <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
+                <div className="w-full lg:w-10/12 px-4 mx-auto mt-6">
                     <div className="flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white border-0">
                         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                             <form onSubmit={handleSubmit}>
-                                <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                                    SECTION ONE: Personal Details
+                                <h6 class="text-blueGray-400 text-sm mt-3 mb-6 uppercase">
+                                    <span className='font-bold'>SECTION three : </span>Personal Details
                                 </h6>
                                 <div class="flex flex-wrap">
                                     <div class="w-full lg:w-6/12 px-6">
                                         <div class="w-full mb-3">
-                                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                Institution name
+                                            <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
+                                                Institution name :
                                             </label>
                                             <input type="text" name='institution_name' required class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
@@ -101,12 +100,12 @@ const AcademicQualifications = () => {
                                     <div className="w-full lg:w-6/12 px-6">
 
                                         <div className="w-full mb-3">
-                                            <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                                Education Level
+                                            <label className="block uppercase text-blueGray-600 text-xs  mb-2" htmlFor="grid-password">
+                                                Education Level :
                                             </label>
                                             <select
                                                 required
-                                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                                 value={selectedOption}
                                                 onChange={handleOptionChange}
                                             >
@@ -121,7 +120,7 @@ const AcademicQualifications = () => {
                                         <>
                                             {/* <div className="w-full lg:w-6/12 px-6">
                                                 <div className="w-full mb-3">
-                                                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grade-input">
+                                                    <label className="block uppercase text-blueGray-600 text-xs  mb-2" htmlFor="grade-input">
                                                         Enter Grade
                                                     </label>
                                                     <input
@@ -135,8 +134,8 @@ const AcademicQualifications = () => {
 
                                             <div class="w-full lg:w-6/12 px-6">
                                                 <div class="w-full mb-3">
-                                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                        Grade
+                                                    <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
+                                                        Grade :
                                                     </label>
                                                     <select className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                                                         <option value="">Select an option</option>
@@ -152,8 +151,8 @@ const AcademicQualifications = () => {
 
                                             <div className="w-full lg:w-6/12 px-6">
                                                 <div className="w-full mb-3">
-                                                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="certNo-input">
-                                                        Enter Cert No.
+                                                    <label className="block uppercase text-blueGray-600 text-xs  mb-2" htmlFor="certNo-input">
+                                                        Enter Cert No :
                                                     </label>
                                                     <input
                                                         type="text"
@@ -172,8 +171,8 @@ const AcademicQualifications = () => {
                                         <>
                                             <div className="w-full lg:w-6/12 px-6">
                                                 <div className="w-full mb-3">
-                                                    <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                                        Awards
+                                                    <label className="block uppercase text-blueGray-600 text-xs  mb-2" htmlFor="grid-password">
+                                                        Awards :
                                                     </label>
                                                     <select
                                                         id="program-dropdown"
@@ -193,8 +192,8 @@ const AcademicQualifications = () => {
 
                                             <div class="w-full lg:w-6/12 px-6">
                                                 <div class="w-full mb-3">
-                                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                        Institution name
+                                                    <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
+                                                        Institution name :
                                                     </label>
                                                     <input type="text" name='institution_name' required class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                                 </div>
@@ -202,8 +201,8 @@ const AcademicQualifications = () => {
 
                                             <div class="w-full lg:w-6/12 px-6">
                                                 <div class="w-full mb-3">
-                                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                        Student Admission number
+                                                    <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
+                                                        Student Admission number :
                                                     </label>
                                                     <input type="text" name='admission_no' required class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                                 </div>
@@ -211,8 +210,8 @@ const AcademicQualifications = () => {
 
                                             <div className="w-full lg:w-6/12 px-6">
                                                 <div class="w-full mb-3">
-                                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                        Program/course
+                                                    <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
+                                                        Program/course :
                                                     </label>
                                                     <input type="text" name='programme_no' required class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
 
@@ -224,8 +223,8 @@ const AcademicQualifications = () => {
 
                                             <div class="w-full lg:w-6/12 px-6">
                                                 <div class="w-full mb-3">
-                                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                        Grade
+                                                    <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
+                                                        Grade :
                                                     </label>
                                                     <select
                                                         id="grade-dropdown"
@@ -245,8 +244,8 @@ const AcademicQualifications = () => {
 
                                             <div className="w-full lg:w-6/12 px-6">
                                                 <div class="w-full mb-3">
-                                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                        Certificate Number
+                                                    <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
+                                                        Certificate Number :
                                                     </label>
                                                     <input type="text" name='certificate_no' required class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
 
@@ -264,8 +263,8 @@ const AcademicQualifications = () => {
                                     {/* Start Date */}
                                     <div class="w-full lg:w-6/12 px-6">
                                         <div class="w-full mb-3">
-                                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="startDate">
-                                                Start Date
+                                            <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlFor="startDate">
+                                                Start Date :
                                             </label>
                                             <input
                                                 type="date"
@@ -280,8 +279,8 @@ const AcademicQualifications = () => {
                                     {/* Graduation/Completion Date */}
                                     <div class="w-full lg:w-6/12 px-6">
                                         <div class="w-full mb-3">
-                                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="endDate">
-                                                Graduation/Completion Date
+                                            <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlFor="endDate">
+                                                Graduation/Completion Date : 
                                             </label>
                                             <input
                                                 type="date"
