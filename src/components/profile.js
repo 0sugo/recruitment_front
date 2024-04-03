@@ -158,15 +158,6 @@ const Profile = ({ isOpen }) => {
                   <div class="flex flex-wrap">
 
                     {/* id no */}
-                    {/* <div class="w-full lg:w-4/12 px-6">
-                      <div class={`w-full mb-3 relative ${Relatively ? ' text-gray-400 text-xs font-thin' : 'static mb-3'}`}>
-                        <label class={`block uppercase text-blueGray-600 text-xs absolute ${Relatively ? 'top-0 left-2 transition-all' : 'top-3 left-2'}`} htmlfor="grid-password">
-                          ID Number:
-                        </label>
-                        <input type="text" name='idNo' onClick={handleRelative} required class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                      </div>
-                    </div> */}
-
                     <div class="w-full lg:w-4/12 px-6">
                       <div class="w-full mb-3">
                         <label class="block uppercase text-blueGray-600 text-xs  mb-2" htmlfor="grid-password">
