@@ -23,7 +23,8 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
     },
     {
       name: "Leave Application",
-      icon: MdFlight
+      icon: MdFlight,
+      sublist: ['My Leave', 'Leave Applications'],
     }
   ];
 
@@ -45,8 +46,15 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
           <nav>
             {navItems.map((item, index) => (
               <button key={index} type="button" onClick={() => handleNavItemClicked(item.name)}>
-                <span className="material-symbols-outlined">{<item.icon className={`${isOpen ?'size-6':'size-7'} `}/>}</span>
+                <span className="material-symbols-outlined">{<item.icon className={`${isOpen ? 'size-6' : 'size-7'} `} />}</span>
                 <p>{item.name}</p>
+                {item.sublist && item.sublist.length>0 &&
+                <ul>
+                  {item.sublist.map((sub, subIndex) => (
+                      <li key={subIndex}>{sub}</li>
+                    ))}
+                </ul>
+                }
               </button>
             ))}
           </nav>
