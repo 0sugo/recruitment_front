@@ -6,7 +6,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
-  // const [isOpen, setIsOpen] = useState(false);
   const navItems = [
     {
       name: "Dashboard",
