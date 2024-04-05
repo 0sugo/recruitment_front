@@ -4,7 +4,6 @@ import { MdFlight } from 'react-icons/md';
 import { BsPersonFill, BsPersonFillUp } from 'react-icons/bs';
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { parsePath } from 'history';
 
 const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
   // const [isOpen, setIsOpen] = useState(false);
