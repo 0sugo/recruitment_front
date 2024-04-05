@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AiFillDashboard } from 'react-icons/ai';
 import { MdFlight } from 'react-icons/md';
 import { BsPersonFill, BsPersonFillUp } from 'react-icons/bs';
-import banner from '../images/coat.png';
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { parsePath } from 'history';
