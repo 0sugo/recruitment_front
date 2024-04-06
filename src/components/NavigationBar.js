@@ -64,12 +64,3 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
 };
 
 export default NavigationBar;
-
-
-
-
-
-
-
-
-
