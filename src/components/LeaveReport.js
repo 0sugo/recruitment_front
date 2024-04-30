@@ -1,16 +1,30 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { AiFillPrinter } from "react-icons/ai";
 import { CgNotes } from "react-icons/cg";
 import ReactToPrint from 'react-to-print';
 import coat from '../images/coat.png';
 import ReactSignatureCanvas from 'react-signature-canvas';
+import { useDispatch, useSelector } from 'react-redux';
+import { getLeaves } from '../redux/Leave/LeaveSlice';
+// import { css } from '@emotion/react';
+import { ClipLoader } from 'react-spinners';
 
 const LeaveReport = () => {
   const componentRef = useRef(null);
+  const dispatch = useDispatch();
+  const userId = localStorage.getItem('userId');
+  const [loading, setLoading] = useState(false);
   const signatureRef = useRef();
   const [showModal, setShowModal] = React.useState(false);
+  const leaves = useSelector((state) => state.leave.leaves);
 
-  // const [signatureDataUrl, setSignatureDataUrl] = useState('');
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getLeaves())
+      .then(() => setLoading(false))
+      .catch(() => setLoading(false));
+  }, [dispatch]);
 
   const formData = {
     pfNo: '123456',
@@ -45,19 +59,25 @@ const LeaveReport = () => {
 
   return (
     <>
-      <table className="w-full table-auto ">
-        <thead>
-          <tr className='border-b border-slate-500'>
-            <th className='px-6 py-3'>S/N</th>
-            <th className='px-6 py-3'>Leave Category</th>
-            <th className='px-6 py-3'>Date</th>
-            <th className='px-6 py-3'>Duration</th>
-            <th className='px-6 py-3'>Status</th>
-            <th className='px-6 py-3'>View</th>
-          </tr>
-        </thead>
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <ClipLoader color={'#123abc'} loading={loading} size={90} />
+        </div>
+      ) :(
+        <div>
+          <table className="w-full table-auto ">
+            <thead>
+              <tr className='border-b border-slate-500'>
+                <th className='px-6 py-3'>S/N</th>
+                <th className='px-6 py-3'>Leave Category</th>
+                <th className='px-6 py-3'>Date</th>
+                <th className='px-6 py-3'>Duration</th>
+                <th className='px-6 py-3'>Status</th>
+                <th className='px-6 py-3'>View</th>
+              </tr>
+            </thead>
 
-        <tbody>
+            {/* <tbody>
           <tr>
             <td className='px-6 py-2'>1.</td>
             <td className='px-6 py-2'>Annual</td>
@@ -65,7 +85,6 @@ const LeaveReport = () => {
             <td className='px-6 py-2'>7</td>
             <td className='px-6 py-2 '><span className='bg-red-600 p-1 text-white rounded-sm inline-block w-20 text-center'>Rejected</span></td>
             <td className='px-6 py-2 flex gap-2 items-center justify-center'>
-              {/* <span><AiFillPrinter /></span> */}
               <ReactToPrint trigger={() => <AiFillPrinter className=''><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} />
               <span><CgNotes /></span>
             </td>
@@ -94,141 +113,181 @@ const LeaveReport = () => {
             </td>
 
           </tr>
-        </tbody>
-      </table>
+        </tbody> */}
 
-      <div>
-        {showModal && <div className="fixed inset-0 z-40 bg-black opacity-25"></div>}
-        {/* Print Leave form */}
-        <div className="leave-template mx-24 my-20" ref={componentRef}>
-          <div className="header ">
-            <div className='flex flex-col items-center'>
-              <img src={coat} alt="Ministry Logo" className='w-32 my-4' />
-              <h3 className='items-center'>MINISTRY OF LABOUR AND SOCIAL PROTECTION</h3>
-              <p className='font-bold italic'>(To be completed in triplicate at least 30 days before leave is due)</p>
-            </div>
-            <div className='flex justify-between my-8'>
-              <p>PF/NO: <span className='font-bold'>{formData.pfNo}</span></p>
-              <p>Date: <span className='font-bold'>{formData.date}</span></p>
-            </div>
-          </div>
-          <div className="content flex flex-col gap-2">
-            <p>
-              The Principal Secretary <br />
-              Ministry of Labour and Social Protection <br />
-              P.O. Box 40326-00100 <br />
-              <span className='font-bold'>NAIROBI</span>
-            </p>
-            <p >
-              Thro’ <span className='font-bold'>{formData.through}</span><br />
-            </p>
+            <tbody>
+              {leaves.map((leave, index) => (
+                <tr key={index}>
+                  <td className='px-6 py-2'>{index + 1}.</td>
+                  <td className='px-6 py-2'>{leave.leave_type}</td>
+                  {/* Replace with actual date from API */}
+                  <td className='px-6 py-2'>12-08-2024</td>
+                  {/* Replace with actual duration from API */}
+                  <td className='px-6 py-2'>{leave.this_year_leaves}</td>
+                  <td className='px-6 py-2'>
+                    {leave.available_days >= 0 ? (
+                      <div className='flex items-center gap-5'>
+                        <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                          <span className='dot'></span>
+                        </span>
+                        <span className='text-black'>Approved</span>
+                      </div>
+                    ) : (
+                      <div className='flex items-center gap-5'>
+                        <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                          <span className='dot'></span>
+                        </span>
+                        <span className='text-black'>Rejected</span>
 
-            <h3 className='font-bold'>APPLICATION FOR ANNUAL LEAVE</h3>
-            <p>
-              I <span className='font-bold'>{formData.name}</span> P/No <span className='font-bold'>{formData.pfNo} </span>Designation <span className='font-bold'>{formData.designation}</span> Apply for <span className='font-bold'>{formData.days}</span> Days annual leave beginning on{' '}
-              <span className='font-bold'>{formData.leaveStartDate}</span>. The last leave was taken by me was from <span className='font-bold'>{formData.lastLeaveStartDate} </span>to <span className='font-bold'>{formData.lastLeaveEndDate}</span>.
-            </p>
-            <p>
-              My leave address will be:  <span className='font-bold'>{formData.leaveAddress}</span> and Mobile No:  <span className='font-bold'>{formData.phone}</span> <br />
-            </p>
-            <p>
-              During the period of leave, my salary should: <br />
-              {formData.salaryPaymentOption === 'a' &&
-                <span className='font-bold'>Continue to be paid into my account</span>}
-              {formData.salaryPaymentOption === 'b' &&
-                <span className='font-bold'>Be paid at the following address:</span>}
-              {formData.salaryPaymentOption === 'b' && formData.payrollAddress}
-              {formData.salaryPaymentOption === 'c' &&
-                <span className='font-bold'>Be included in the payroll of {formData.payrollAddress} Station</span>}
-            </p>
+                      </div>
+                    )}
+                  </td>
+                  <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+                    <AiFillPrinter />
+                    <CgNotes />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
 
 
+          </table>
 
-            <p>
-              As I am taking not less than one-half of my annual leave due to me, I wish to receive my pay for the month of{' '}
-              <span className='font-bold'>{formData.payMonth}</span> Three days before the date of commencement of leave in terms of Regulation 1.1 of the Code of
-              Regulation.
-            </p>
-            <p>
-              I understand that I will require permission should I desire to spend leave outside Kenya in terms of
-              personnel Circular No. 6 of 15th January 1967.
-            </p>
-            <div className='flex justify-between items-end mt-4'>
-              <p>Date: <span className='font-bold'> {formData.permissionDate}</span></p>
-              <div>
-                <div className='flex flex-col'>
-                  <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
-                  <p className='font-bold'>Signature of Applicant</p>
+          <div>
+            {showModal && <div className="fixed inset-0 z-40 bg-black opacity-25"></div>}
+            {/* Print Leave form */}
+            <div className="leave-template mx-24 my-20" ref={componentRef}>
+              <div className="header ">
+                <div className='flex flex-col items-center'>
+                  <img src={coat} alt="Ministry Logo" className='w-32 my-4' />
+                  <h3 className='items-center'>MINISTRY OF LABOUR AND SOCIAL PROTECTION</h3>
+                  <p className='font-bold italic'>(To be completed in triplicate at least 30 days before leave is due)</p>
+                </div>
+                <div className='flex justify-between my-8'>
+                  <p>PF/NO: <span className='font-bold'>{formData.pfNo}</span></p>
+                  <p>Date: <span className='font-bold'>{formData.date}</span></p>
                 </div>
               </div>
-            </div>
+              <div className="content flex flex-col gap-2">
+                <p>
+                  The Principal Secretary <br />
+                  Ministry of Labour and Social Protection <br />
+                  P.O. Box 40326-00100 <br />
+                  <span className='font-bold'>NAIROBI</span>
+                </p>
+                <p >
+                  Thro’ <span className='font-bold'>{formData.through}</span><br />
+                </p>
 
-            {/* <h3>PART II</h3> */}
-            <h3 className='mx-auto' style={{ pageBreakBefore: 'always' }}>PART II</h3>
-            <p className='font-bold italic'>(To be completed by Head of Department)</p>
-            {formData.headOfDepartmentApproval === 'a' ? (
-              <>
-                <p className='font-bold'>Approved</p>
-                <p>Recommended arrangement can be made for the performance of duties of the above Officer during his/her absence.</p>
-              </>
-            ) : (
-              <span className='inline'>
-                <p><span className='font-bold'>Not Approved</span> for the following reasons: -</p>
-                {formData.rejectedReason && <p>Reason: <span className='font-bold'>{formData.rejectedReason}</span></p>}
-              </span>
-            )}
-            <div className='flex justify-between'>
-              <div className='flex flex-col justify-between '>
-                <p>Station: </p>
-                <p>Designation: </p>
-              </div>
+                <h3 className='font-bold'>APPLICATION FOR ANNUAL LEAVE</h3>
+                <p>
+                  I <span className='font-bold'>{formData.name}</span> P/No <span className='font-bold'>{formData.pfNo} </span>Designation <span className='font-bold'>{formData.designation}</span> Apply for <span className='font-bold'>{formData.days}</span> Days annual leave beginning on{' '}
+                  <span className='font-bold'>{formData.leaveStartDate}</span>. The last leave was taken by me was from <span className='font-bold'>{formData.lastLeaveStartDate} </span>to <span className='font-bold'>{formData.lastLeaveEndDate}</span>.
+                </p>
+                <p>
+                  My leave address will be:  <span className='font-bold'>{formData.leaveAddress}</span> and Mobile No:  <span className='font-bold'>{formData.phone}</span> <br />
+                </p>
+                <p>
+                  During the period of leave, my salary should: <br />
+                  {formData.salaryPaymentOption === 'a' &&
+                    <span className='font-bold'>Continue to be paid into my account</span>}
+                  {formData.salaryPaymentOption === 'b' &&
+                    <span className='font-bold'>Be paid at the following address:</span>}
+                  {formData.salaryPaymentOption === 'b' && formData.payrollAddress}
+                  {formData.salaryPaymentOption === 'c' &&
+                    <span className='font-bold'>Be included in the payroll of {formData.payrollAddress} Station</span>}
+                </p>
 
-              <div className='flex justify-between'>
-              <div className='flex flex-col justify-between '>
 
-                <p>Date: </p>
-                <div className='flex items-end'>
-                  <p className=''>Sign</p>
-                  <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
+
+                <p>
+                  As I am taking not less than one-half of my annual leave due to me, I wish to receive my pay for the month of{' '}
+                  <span className='font-bold'>{formData.payMonth}</span> Three days before the date of commencement of leave in terms of Regulation 1.1 of the Code of
+                  Regulation.
+                </p>
+                <p>
+                  I understand that I will require permission should I desire to spend leave outside Kenya in terms of
+                  personnel Circular No. 6 of 15th January 1967.
+                </p>
+                <div className='flex justify-between items-end mt-4'>
+                  <p>Date: <span className='font-bold'> {formData.permissionDate}</span></p>
+                  <div>
+                    <div className='flex flex-col'>
+                      <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
+                      <p className='font-bold'>Signature of Applicant</p>
+                    </div>
+                  </div>
                 </div>
+
+                {/* <h3>PART II</h3> */}
+                <h3 className='mx-auto' style={{ pageBreakBefore: 'always' }}>PART II</h3>
+                <p className='font-bold italic'>(To be completed by Head of Department)</p>
+                {formData.headOfDepartmentApproval === 'a' ? (
+                  <>
+                    <p className='font-bold'>Approved</p>
+                    <p>Recommended arrangement can be made for the performance of duties of the above Officer during his/her absence.</p>
+                  </>
+                ) : (
+                  <span className='inline'>
+                    <p><span className='font-bold'>Not Approved</span> for the following reasons: -</p>
+                    {formData.rejectedReason && <p>Reason: <span className='font-bold'>{formData.rejectedReason}</span></p>}
+                  </span>
+                )}
+                <div className='flex justify-between'>
+                  <div className='flex flex-col justify-between '>
+                    <p>Station: </p>
+                    <p>Designation: </p>
+                  </div>
+
+                  <div className='flex justify-between'>
+                    <div className='flex flex-col justify-between '>
+
+                      <p>Date: </p>
+                      <div className='flex items-end'>
+                        <p className=''>Sign</p>
+                        <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <h3 className='mx-auto'>PART III</h3>
-            <p className='font-bold italic'>(To be completed by the Principal Secretary where applicable)</p>
-            <p >This application is: <span className='font-bold'> {formData.principalSecretaryApproval}</span></p>
+                <h3 className='mx-auto'>PART III</h3>
+                <p className='font-bold italic'>(To be completed by the Principal Secretary where applicable)</p>
+                <p >This application is: <span className='font-bold'> {formData.principalSecretaryApproval}</span></p>
 
-            <div className='flex justify-between'>
-              <p>Date: </p>
-              <div className='flex items-end'>
-                <p className=''>Sign</p>
-                <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
-              </div>
-            </div>
+                <div className='flex justify-between'>
+                  <p>Date: </p>
+                  <div className='flex items-end'>
+                    <p className=''>Sign</p>
+                    <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
+                  </div>
+                </div>
 
-            <h3 className='mx-auto'>PART IV</h3>
-            <p className='font-bold italic'>(To be completed by the HRM&D Department)</p>
-            <p>
-              Leave b/f from the previous year: <span className='font-bold'>{formData.hrmDepartment.leaveBroughtForward}</span> days <br />
-              Leave days for the current year: <span className='font-bold'>{formData.hrmDepartment.leaveDaysCurrentYear}</span> days <br />
-              Total Leave days due: <span className='font-bold'>{formData.hrmDepartment.totalLeaveDaysDue}</span> days <br />
-              Less days already taken: <span className='font-bold'>{formData.hrmDepartment.daysAlreadyTaken}</span> days <br />
-              Less this application: <span className='font-bold'>{formData.days}</span> days <br />
-              Leave balance for the current year: <span className='font-bold'>{formData.leaveBalance}</span> days
-              <span>To resume duty on: <span className='font-bold'>{formData.resumeDate}</span></span>
-            </p>
-            <div className='flex justify-between items-end'>
-              <p>Date: </p>
-              <p>Designation: </p>
-              <div className='flex items-end'>
-                <p className=''>Sign</p>
-                <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
+                <h3 className='mx-auto'>PART IV</h3>
+                <p className='font-bold italic'>(To be completed by the HRM&D Department)</p>
+                <p>
+                  Leave b/f from the previous year: <span className='font-bold'>{formData.hrmDepartment.leaveBroughtForward}</span> days <br />
+                  Leave days for the current year: <span className='font-bold'>{formData.hrmDepartment.leaveDaysCurrentYear}</span> days <br />
+                  Total Leave days due: <span className='font-bold'>{formData.hrmDepartment.totalLeaveDaysDue}</span> days <br />
+                  Less days already taken: <span className='font-bold'>{formData.hrmDepartment.daysAlreadyTaken}</span> days <br />
+                  Less this application: <span className='font-bold'>{formData.days}</span> days <br />
+                  Leave balance for the current year: <span className='font-bold'>{formData.leaveBalance}</span> days
+                  <span>To resume duty on: <span className='font-bold'>{formData.resumeDate}</span></span>
+                </p>
+                <div className='flex justify-between items-end'>
+                  <p>Date: </p>
+                  <p>Designation: </p>
+                  <div className='flex items-end'>
+                    <p className=''>Sign</p>
+                    <img src={formData.signatureDataUrl} alt="Applicant's Signature" className="w-32" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+
+      )}
 
     </>
   )
