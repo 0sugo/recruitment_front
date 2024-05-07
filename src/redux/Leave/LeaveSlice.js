@@ -22,7 +22,7 @@ export const submitForm = createAsyncThunk('leave/submitForm', async (formData) 
 export const getLeaves = createAsyncThunk('leave/GetLeaves', async() => {
   try {
   const userId = localStorage.getItem('userId');
-    const response = await axios.get(`${url}/getUserLeaves/${userId}`);
+    const response = await axios.get(`${url}/getMyLeaves/${userId}`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to retrieve Leaves');
