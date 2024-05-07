@@ -14,7 +14,7 @@ const ProfileOutput = ({ selectedNavItem, selectedNav2Item, isOpen, handleNav2It
   return (
     <div>
       <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />
-      {selectedNavItem === 'Leave Application' && <LeaveForm />}
+      {selectedNavItem === 'Leaves' && <LeaveForm />}
       {selectedNavItem === 'Profile' && <Profile isOpen={isOpen} />}
       {selectedNav2Item === 'Profile' && <Profile isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
       {selectedNav2Item === 'academic' && <AcademicQualifications isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
