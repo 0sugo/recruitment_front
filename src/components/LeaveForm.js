@@ -82,7 +82,7 @@ const LeaveForm = () => {
     signatureRef.current.clear();
   };
 
-
+// console.log(leaves);
   return (
     <div className='flex flex-col'>
       <div className=" py-4 flex justify-between text-xs text-gray-500 bg-[#f8f8f4] px-2">
