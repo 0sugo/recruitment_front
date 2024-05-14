@@ -29,7 +29,7 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
       name: "Leave Application",
       icon: MdFlight,
       sublistVisible: false,
-      sublist: ['My Applications', 'All Leaves', 'Employee Applications'],
+      sublist: ['My Applications', 'Employee Applications', 'All Leaves'],
     }
   ]);
 
@@ -42,6 +42,7 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
     });
     setNavItems(updatedNavItems);
     onNavItemSelect(itemName);
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -64,10 +65,11 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
                   </span>
                   <p className={`${isOpen ? 'block ' : 'hidden'}`}>{item.name}</p>
                 </button>
-                {isOpen && item.sublistVisible && (
+                {item.sublistVisible && isOpen && (
                   <ul className="ml-6 bg-slate-50">
                     {item.sublist.map((sub, subIndex) => (
-                      <li key={subIndex} className="pl-1 py-2 text-left  border-b border-black">{sub}</li>
+                      <li key={subIndex} className="border-b border-black">
+                        <button className='text-left bg-blue-200 w-full pl-1 py-2'>{sub}</button></li>
                     ))}
                   </ul>
                 )}

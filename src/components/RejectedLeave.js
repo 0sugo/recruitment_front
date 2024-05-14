@@ -12,6 +12,7 @@ const RejectedLeave = () => {
                 <th className='px-6 py-3'>Date</th>
                 <th className='px-6 py-3'>Duration</th>
                 <th className='px-6 py-3'>Status</th>
+                <th className='px-6 py-3'>Stage</th>
                 <th className='px-6 py-3'>View</th>
               </tr>
             </thead>

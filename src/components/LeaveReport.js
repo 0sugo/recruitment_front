@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLeaves } from '../redux/Leave/LeaveSlice';
 // import { css } from '@emotion/react';
 import { ClipLoader } from 'react-spinners';
+import staticData from '../redux/staticdata.js';
 
 const LeaveReport = () => {
   const componentRef = useRef(null);
@@ -58,6 +59,10 @@ const LeaveReport = () => {
   };
   console.log(leaves);
 
+/**
+ * the static data
+ */
+
   return (
     <>
       {loading ? (
@@ -74,6 +79,7 @@ const LeaveReport = () => {
                 <th className='px-6 py-3'>Date</th>
                 <th className='px-6 py-3'>Duration</th>
                 <th className='px-6 py-3'>Status</th>
+                <th className='px-6 py-3'>Stage</th>
                 <th className='px-6 py-3'>View</th>
               </tr>
             </thead>
@@ -117,7 +123,7 @@ const LeaveReport = () => {
         </tbody> */}
 
             <tbody>
-              {leaves.map((leave, index) => (
+              {staticData.map((leave, index) => (
                 <tr key={index}>
                   <td className='px-6 py-2'>{index + 1}.</td>
                   <td className='px-6 py-2'>{leave.name}</td>
@@ -150,6 +156,32 @@ const LeaveReport = () => {
 
                       </div>
                     )}
+                  </td>
+                {/**
+                 * added the column stage: indicates where the application is currently pending
+                 */}
+               <td className='px-6 py-2'>
+                    {leave.stage === 1 ? (
+                      <div className='flex items-center gap-5'>
+                        <span className='text-black'>HOD</span>
+                      </div>
+                    ) : leave.stage === 2 ? (
+                      <div className='flex items-center gap-5'>
+                        <span className='text-black'>HR</span>
+
+                      </div>
+                    ) : leave.stage === 3 ? ( 
+                      <div className='flex items-center gap-5'>
+                        <span className='text-black'>PS</span>
+
+                      </div>
+                    ) : ( 
+                      <div className='flex items-center gap-5'>
+                        <span className='text-black'>Pending</span>
+
+                      </div>
+                    )
+                  }
                   </td>
                   {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
                     {/* <AiFillPrinter /> */}

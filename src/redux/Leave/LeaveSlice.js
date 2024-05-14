@@ -22,12 +22,25 @@ export const submitForm = createAsyncThunk('leave/submitForm', async (formData) 
 export const getLeaves = createAsyncThunk('leave/GetLeaves', async() => {
   try {
   const userId = localStorage.getItem('userId');
-    const response = await axios.get(`${url}/getMyLeaves/${userId}`);
+    // const response = await axios.get(`${url}/getMyLeaves/${userId}`);
+    const response = await axios.get(`${url}/getMyLeaves/110`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to retrieve Leaves');
   }
 });
+
+export const getAllLeaves = createAsyncThunk('leave/GetLeaves', async() => {
+  try {
+  const userId = localStorage.getItem('userId');
+    // const response = await axios.get(`${url}/getMyLeaves/${userId}`);
+    const response = await axios.get(`${url}/getMyLeaves/110`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Leaves');
+  }
+});
+
 
 const formSlice = createSlice({
   name: 'LeaveForm',
@@ -56,7 +69,6 @@ const formSlice = createSlice({
     builder.addCase(getLeaves.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      // Assuming that the fetched leaves data is stored in action.payload
       state.leaves = action.payload;
     });
 
