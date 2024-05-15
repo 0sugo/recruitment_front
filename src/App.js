@@ -22,6 +22,7 @@ import LeaveForm from './components/LeaveForm';
 import Output from './components/Output';
 import { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
+import LeaveReport from './components/LeaveReport';
 
 function App() {
 
@@ -57,6 +58,8 @@ function App() {
         <Route path="/Rejected-Applications" element={< RejectedApplications/>} />
         <Route path="/All-Applications" element={< AllApplications/>} />
         <Route path="/Leave-Management" element={< LeaveForm/>} />
+        {/** Handle leave application */}
+        <Route path="/LeaveReport/:id" element={<LeaveReport/>}/>
       </Routes>
 
       {/* <Footer /> */}

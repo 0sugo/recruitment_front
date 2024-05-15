@@ -1,6 +1,6 @@
 const staticData = [
   {
-    id: 1,
+    id: 'userID',
     name: "John Doe",
     leave_begins_on: "2024-05-20",
     num_of_days: 5,
@@ -21,7 +21,7 @@ const staticData = [
     leave_begins_on: "2024-07-01",
     num_of_days: 7,
     status: 0, // Pending
-    stage: 3, // PS
+    stage: 2, // HR
   },
   {
     id: 4,
@@ -37,6 +37,14 @@ const staticData = [
     leave_begins_on: "2024-09-05",
     num_of_days: 2,
     status: 0, // Pending
+    stage: 1, // HOD
+  },
+  {
+    id: 'userID',
+    name: "Kinuthia ",
+    leave_begins_on: "2024-06-20",
+    num_of_days: 6,
+    status: 0, // Approved
     stage: 1, // HOD
   },
 ];
