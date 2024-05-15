@@ -4,8 +4,13 @@ import { MdFlight } from 'react-icons/md';
 import { BsPersonFill, BsPersonFillUp } from 'react-icons/bs';
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useNavigate } from 'react-router-dom';
+
 
 const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
+  
+ const navigate = useNavigate();
+  
   const [navItems, setNavItems] = useState([
     {
       name: "Dashboard",
@@ -36,12 +41,27 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
   const handleNavItemClicked = (itemName) => {
     const updatedNavItems = navItems.map(item => {
       if (item.name === itemName) {
-        return { ...item, sublistVisible: !item.sublistVisible };
+        return { ...item, sublistVisible: isOpen ? !item.sublistVisible : true };
+      } else {
+        return { ...item, sublistVisible: false };
       }
-      return item;
     });
     setNavItems(updatedNavItems);
     onNavItemSelect(itemName);
+    if (!isOpen) {
+      setIsOpen(true);
+    }
+  };
+  
+  
+  /**
+   * handle the sublist id
+   * Redirect the id of the sublist clicked and pass it to leave summary component
+   */
+  const handleSublistItemClick = (itemName, sublistID) => {
+    alert(`Test if the theory does work: ${itemName} at index ${sublistID}`);
+    navigate(`/LeaveReport/${sublistID}`);
+    onNavItemSelect(itemName, sublistID);
     setIsOpen(!isOpen);
   };
 
@@ -65,11 +85,11 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
                   </span>
                   <p className={`${isOpen ? 'block ' : 'hidden'}`}>{item.name}</p>
                 </button>
-                {item.sublistVisible && isOpen && (
+                {item.sublistVisible && (
                   <ul className="ml-6 bg-slate-50">
                     {item.sublist.map((sub, subIndex) => (
                       <li key={subIndex} className="border-b border-black">
-                        <button className='text-left bg-blue-200 w-full pl-1 py-2'>{sub}</button></li>
+                        <button className='text-left bg-blue-200 w-full pl-1 py-2' onClick={() => handleSublistItemClick(item.name, subIndex)}>{sub}</button></li>
                     ))}
                   </ul>
                 )}

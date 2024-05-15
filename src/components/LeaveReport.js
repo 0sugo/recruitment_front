@@ -9,23 +9,60 @@ import { getLeaves } from '../redux/Leave/LeaveSlice';
 // import { css } from '@emotion/react';
 import { ClipLoader } from 'react-spinners';
 import staticData from '../redux/staticdata.js';
+import { useParams } from 'react-router-dom';
+
 
 const LeaveReport = () => {
   const componentRef = useRef(null);
   const dispatch = useDispatch();
   const userId = localStorage.getItem('userId');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const signatureRef = useRef();
   const [showModal, setShowModal] = React.useState(false);
   const leaves = useSelector((state) => state.leave.leaves);
 
+  /**
+   * Get the ID from url parameter, passed from the navitem sublist
+   * use the id to determine the content rendered
+   * filter summary data based on the passed ID and render it accordingly
+   */
+  const { id } = useParams();
+  const [leaveSummary, setSummaryData] = useState([]);
 
-  useEffect(() => {
-    setLoading(true);
-    dispatch(getLeaves())
-      .then(() => setLoading(false))
-      .catch(() => setLoading(false));
-  }, [dispatch]);
+useEffect(() => {
+  const renderData = () => {
+    if (id === '0'){
+      // this is information matching the session id
+      const filterData = staticData.filter(item => item.id === "userID");
+      console.log(filterData);
+      setSummaryData(filterData);
+    }
+    else if (id === '1'){
+      // this is all pending information meant for session ID
+      // using default 0 - pending, 2 - HR's stage
+      const filterData = staticData.filter(item => item.status === 0 && item.stage === 2);
+      console.log(filterData);
+      setSummaryData(filterData);
+    }
+    else if (id === '2'){
+      // display the full summary of leave application
+      console.log(staticData);
+      setSummaryData(staticData);
+    }
+    else {
+      setSummaryData([]);
+    }
+  };
+
+  renderData();
+}, [id]);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   dispatch(getLeaves())
+  //     .then(() => setLoading(false))
+  //     .catch(() => setLoading(false));
+  // }, [dispatch]);
 
   const formData = {
     pfNo: '123456',
@@ -123,7 +160,7 @@ const LeaveReport = () => {
         </tbody> */}
 
             <tbody>
-              {staticData.map((leave, index) => (
+              {leaveSummary.map((leave, index) => (
                 <tr key={index}>
                   <td className='px-6 py-2'>{index + 1}.</td>
                   <td className='px-6 py-2'>{leave.name}</td>
