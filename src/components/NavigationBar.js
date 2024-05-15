@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
-  
- const navigate = useNavigate();
-  
+
+  const navigate = useNavigate();
+
   const [navItems, setNavItems] = useState([
     {
       name: "Dashboard",
@@ -46,6 +46,14 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
         return { ...item, sublistVisible: false };
       }
     });
+  
+    // Close all sublists if the navbar is being closed
+    if (!isOpen) {
+      updatedNavItems.forEach(item => {
+        item.sublistVisible = false;
+      });
+    }
+  
     setNavItems(updatedNavItems);
     onNavItemSelect(itemName);
     if (!isOpen) {
@@ -53,7 +61,9 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
     }
   };
   
-  
+
+
+
   /**
    * handle the sublist id
    * Redirect the id of the sublist clicked and pass it to leave summary component
@@ -70,11 +80,23 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
       <aside className={`sidebar-2 ${isOpen ? "open" : ""}`}>
         <div className="inner">
           <header className="border-b">
-            <button type="button" className="sidebar-2-burger" onClick={() => setIsOpen(!isOpen)}>
-              <span className="material-symbols-outlined">
-                {isOpen ? <AiOutlineClose /> : <RxHamburgerMenu />}
-              </span>
-            </button>
+          <button type="button" className="sidebar-2-burger" onClick={() => setIsOpen(!isOpen)}>
+  <span className="material-symbols-outlined">
+    {isOpen ? <AiOutlineClose /> : (
+      <>
+        <RxHamburgerMenu />
+        {/* Close all sublists if the navbar is being closed */}
+        {navItems.map(item => {
+          if (item.sublistVisible) {
+            item.sublistVisible = false;
+          }
+          return null;
+        })}
+      </>
+    )}
+  </span>
+</button>
+
           </header>
           <nav>
             {navItems.map((item, index) => (
