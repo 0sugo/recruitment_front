@@ -5,12 +5,12 @@ import { BsPersonFill, BsPersonFillUp } from 'react-icons/bs';
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
-
+import { getFormData } from '../redux/Leave/LeaveSlice';
 
 const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
-  
+
  const navigate = useNavigate();
-  
+
   const [navItems, setNavItems] = useState([
     {
       name: "Dashboard",
@@ -52,8 +52,8 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
       setIsOpen(true);
     }
   };
-  
-  
+
+
   /**
    * handle the sublist id
    * Redirect the id of the sublist clicked and pass it to leave summary component
