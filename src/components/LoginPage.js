@@ -31,11 +31,11 @@ const LoginPage = () => {
     dispatch(setLoading());
 
     try {
-      const token = await dispatch(loginAction(job_id, password));
-      console.log(token);
-      dispatch(setToken({ token, expiration: calculateExpiration() }));
+      const {token,userId} = await dispatch(loginAction(job_id, password));
+      dispatch(setToken({ token }));
+      
       localStorage.setItem('token', token);
-      localStorage.setItem('userId', token);
+      localStorage.setItem('userId', userId);
 
       if (token === 'admin') {
         navigate('/admin');
@@ -56,35 +56,6 @@ const LoginPage = () => {
     }
   };
 
-    // Calculate expiration time (e.g., 1 hour from now)
-    const calculateExpiration = () => {
-      const expirationTime = new Date();
-      expirationTime.setTime(expirationTime.getTime() + 60000); // Adjust as needed
-      return expirationTime;
-    };
-
-    // Set up session timeout timer
-    useEffect(() => {
-      const expirationTimer = setTimeout(() => {
-        dispatch(logout());
-        localStorage.removeItem('token');
-        toast.warning('Session expired. Please log in again.');
-        navigate('/login'); 
-      }, calculateTimeoutDuration());
-
-      // Clear the timer on component unmount or successful login
-      return () => clearTimeout(expirationTimer);
-      console.log('Expiration Timer Cleared');
-    }, [dispatch, navigate]);
-
-    // Calculate the timeout duration (time until expiration)
-    const calculateTimeoutDuration = () => {
-      const now = new Date();
-      const expirationTime = new Date(expiration);
-      const timeoutDuration = expirationTime.getTime() - now.getTime();
-      // console.log('Timeout Duration:', timeoutDuration);
-      return timeoutDuration;
-    };
 
   return (
     <>
