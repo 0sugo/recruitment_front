@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReactToPrint from 'react-to-print';
 import coat from '../images/coat.png';
 import ReactSignatureCanvas from 'react-signature-canvas';
-import { useDispatch,useSelector } from 'react-redux';
-import { getLeaves, submitForm } from '../redux/Leave/LeaveSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFormData, getLeaves, submitForm } from '../redux/Leave/LeaveSlice';
 import { HiOutlinePlus } from "react-icons/hi";
 import LeaveReport from './LeaveReport';
 import PendingLeave from './PendingLeave';
@@ -15,11 +15,13 @@ const LeaveForm = () => {
   const componentRef = useRef(null);
   const signatureRef = useRef();
   const dispatch = useDispatch();
+  const personalDetails = useSelector((state) => state.leave.personal);
   const leaves = useSelector((state) => state.leave.leaves);
   const [showModal, setShowModal] = React.useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [selectedComponent, setSelectedComponent] = useState('LeaveReport');
   const [formData, setFormData] = useState({});
+  console.log(personalDetails);
 
   const handleComponentSelect = (componentName) => {
     setSelectedComponent(componentName);
@@ -32,8 +34,6 @@ const LeaveForm = () => {
     return `${year}${month}${day}`;
   };
 
-
-
   useEffect(() => {
     const timerID = setInterval(() => {
       setCurrentDateTime(new Date());
@@ -42,9 +42,11 @@ const LeaveForm = () => {
     return () => clearInterval(timerID);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getLeaves());
-  },[dispatch]);
+    dispatch(getFormData());
+
+  }, [dispatch]);
 
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
   const formattedDateTime = currentDateTime.toLocaleString('en-US', options);
@@ -54,35 +56,39 @@ const LeaveForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const signatureData = signatureRef.current.toDataURL();
+    const signatureData = signatureRef.current.toDataURL();
+    const userId = localStorage.getItem('userId');
 
     const formData = {
-      // full_name: e.target.full_name?.value,
-      // phone: e.target.phone?.value,
-      // postal_address: e.target.postal_address.value,
+      name: e.target.full_name?.value,
+      user_id: userId,
+      gender: e.target.gender.value,
+      mobile_no: e.target.phone?.value,
+      department: e.target.department.value,
       designation: e.target.designation.value,
       leave_type: e.target.leave_type.value,
+      postal_address: e.target.leave_address.value,
       leave_address: e.target.leave_address.value,
       salary_paid_to: e.target.salary_paid_to.value,
       account_no: e.target.account_no?.value,
       num_of_days: e.target.num_of_days.value,
       leave_begins_on: e.target.leave_begins_on.value,
       signed: 1,
-      // signature: signatureData,
+      sign: signatureData,
       date: new Date().toISOString().split('T')[0],
     };
 
     console.log(formData);
     dispatch(submitForm(formData));
 
-    // setSignatureDataUrl(signatureData);
+    setSignatureDataUrl(signatureData);
   };
 
   const handleClear = () => {
     signatureRef.current.clear();
   };
 
-// console.log(leaves);
+  // console.log(leaves);
   return (
     <div className='flex flex-col'>
       <div className=" py-4 flex justify-between text-xs text-gray-500 bg-[#f8f8f4] px-2">
@@ -143,6 +149,50 @@ const LeaveForm = () => {
                       <div className="w-full lg:w-4/12 px-6">
                         <div className="w-full mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
+                            Name :
+                          </label>
+                          <input type="text" name='full_name' value={formData.full_name} placeholder='e.g John Doe'
+                            required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                      </div>
+
+                      <div className="w-full lg:w-4/12 px-6">
+                        <div className="w-full mb-3">
+                          <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
+                            Gender :
+                          </label>
+                          <select name='gender' value={formData.gender} required className="border-0 px-2 py-2  text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" >
+                            <option value="">Select one option</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Prefor Not seay</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="w-full lg:w-4/12 px-6">
+                        <div className="w-full mb-3">
+                          <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
+                            Department :
+                          </label>
+                          <input type="text" name='department' value={formData.department} placeholder='e.g Human Resource'
+                            required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                      </div>
+
+                      <div className="w-full lg:w-4/12 px-6">
+                        <div className="w-full mb-3">
+                          <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
+                            Phone Number :
+                          </label>
+                          <input type="text" name='phone' value={formData.phone} placeholder='e.g 0712345678'
+                            required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                      </div>
+
+                      <div className="w-full lg:w-4/12 px-6">
+                        <div className="w-full mb-3">
+                          <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Designation :
                           </label>
                           <input type="text" name='designation' value={formData.designation} placeholder='e.g snr ICT officer'
@@ -160,15 +210,13 @@ const LeaveForm = () => {
                         </div>
                       </div>
 
-
-
                       <div className="w-full lg:w-4/12 px-6">
                         <div className="w-full mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Leave Type :
                           </label>
                           <select name='leave_type' value={formData.leave_type} required className="border-0 px-2 py-2  text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" >
-                            <option value="a">Select one option</option>
+                            <option value="">Select one option</option>
                             <option value="4">Sick Leave</option>
                             <option value="5">Maternity</option>
                             <option value="6">Annual</option>
@@ -228,7 +276,7 @@ const LeaveForm = () => {
                         </div>
                       </div>
 
-                      {/* <div className="w-full mt-2 px-6 flex justify-center">
+                      <div className="w-full mt-2 px-6 flex justify-center">
                         <div className="w-full max-w-md mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="signature">
                             Signature :
@@ -245,7 +293,7 @@ const LeaveForm = () => {
                           </div>
                           <p className="text-xs text-blueGray-500 mt-1 text-red-600">Please sign in the box above using your mouse or finger if on a touch device.</p>
                         </div>
-                      </div> */}
+                      </div>
 
                     </div>
 
