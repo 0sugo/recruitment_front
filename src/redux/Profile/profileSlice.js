@@ -2,9 +2,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
+const userId = localStorage.getItem('userId');
+
 export const postPersonalDetails = (personalDetails,userId) => async (dispatch) => {
   try {
-    const response = await axios.post(`https://magicalfurnitures.co.ke/recruitment/public/api/personalDetails/${userId}`, personalDetails);
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    };
+    const response = await axios.post(`https://magicalfurnitures.co.ke/recruitment/public/api/personalDetails/${userId}`, personalDetails, config);
 
     console.log('Server Response:', response.data);
     dispatch(updatePersonalDetails(response.data));
