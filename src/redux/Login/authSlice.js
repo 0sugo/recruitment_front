@@ -4,26 +4,26 @@ import axios from 'axios';
 export const login = (job_id, password) => async (dispatch) => {
   try {
     const response = await axios.post('https://sir.magicalfurnitures.co.ke/api/login', { job_id, password });
-    localStorage.setItem('userId', response.data.id);
 
-    dispatch(setToken(response.data.token));
-    return response.data.id;
+    const token = response.data.authorzation.token;
+    const userId = response.data.user_id;
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('userId', userId);
+    return {token,userId} ;
+
   } catch (error) {
     dispatch(setError(error.response ? error.response.data.message : 'An error occurred'));
     throw error;
   }
 };
 
-const calculateExpiration = () => {
-  const expirationTime = new Date();
-  expirationTime.setHours(expirationTime.getHours() + 1);
-  return expirationTime;
-};
+
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: localStorage.getItem('token') || null,
+    token: localStorage.getItem('token'),
     isAuthenticated: localStorage.getItem('token') ? true : false,
     loading: false,
     error: null,
@@ -31,13 +31,12 @@ export const authSlice = createSlice({
   },
   reducers: {
     setToken: (state, action) => {
-      state.token = action.payload;
+      state.token = action.payload.token;
       state.isAuthenticated = true;
       state.loading = false;
       state.error = null;
-      state.expiration = action.payload.expiration || calculateExpiration();
-      localStorage.setItem('token', action.payload);
     },
+
     setLoading: (state) => {
       state.loading = true;
     },
@@ -52,9 +51,11 @@ export const authSlice = createSlice({
       state.error = null;
       state.expiration = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('userId');
     },
   },
 });
+
 
 export const { setToken, setLoading, setError, logout } = authSlice.actions;
 
