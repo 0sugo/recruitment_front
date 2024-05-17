@@ -13,7 +13,6 @@ const store = configureStore({
     applications: applicationsReducer,
     userApplications: applicationsReducer,
     leave:leaveReducer,
-
   },
 });
 export default store;
