@@ -18,7 +18,8 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
   // Define role-based sublist items
   const roleBasedSublists = {
     // employee: ['My Applications'],
-    HR: ['My Applications', 'All Applications', 'Employee Management'],
+    HRMD: ['My Applications', 'All Applications', 'Employee Management'],
+    HOD: ['My Applications', 'Employee Management'],
     admin: ['My Applications', 'Employee Management', 'All Leaves']
   };
 
