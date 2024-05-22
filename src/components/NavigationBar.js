@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiFillDashboard } from 'react-icons/ai';
 import { MdFlight } from 'react-icons/md';
 import { BsPersonFill, BsPersonFillUp } from 'react-icons/bs';
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
-import { getFormData } from '../redux/Leave/LeaveSlice';
 
-const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
+// Fetch the role from local storage
+const role = localStorage.getItem('role');
+const userId = localStorage.getItem('userId');
 
- const navigate = useNavigate();
+const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) => {
+  const navigate = useNavigate();
+
+
+
+  // Define role-based sublist items
+  const roleBasedSublists = {
+    // employee: ['My Applications'],
+    HR: ['My Applications', 'All Applications', 'Employee Management'],
+    admin: ['My Applications', 'Employee Management', 'All Leaves']
+  };
+
+  // Determine the allowed sublist items for the current role
+  const allowedSublists = roleBasedSublists[role] || [];
 
   const [navItems, setNavItems] = useState([
     {
@@ -34,9 +48,19 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
       name: "Leave Application",
       icon: MdFlight,
       sublistVisible: false,
-      sublist: ['My Applications', 'Employee Applications', 'All Leaves'],
+      sublist: [],  // initially empty
     }
   ]);
+
+  // Update the Leave Application sublist based on the role
+  useEffect(() => {
+    setNavItems(prevNavItems => prevNavItems.map(item => {
+      if (item.name === 'Leave Application') {
+        return { ...item, sublist: allowedSublists };
+      }
+      return item;
+    }));
+  }, [2]);
 
   const handleNavItemClicked = (itemName) => {
     const updatedNavItems = navItems.map(item => {
@@ -61,14 +85,15 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
     }
   };
 
-  /**
-   * handle the sublist id
-   * Redirect the id of the sublist clicked and pass it to leave summary component
-   */
-  const handleSublistItemClick = (itemName, sublistID) => {
-    alert(`Test if the theory does work: ${itemName} at index ${sublistID}`);
-    navigate(`/LeaveReport/${sublistID}`);
-    onNavItemSelect(itemName, sublistID);
+  const handleSublistItemClick = (itemName, subName) => {
+
+    if (subName === 'Employee Management') {
+      navigate("/EmployeeManagement");
+      alert("Emp Man Clicked");
+    }
+    console.log(itemName, subName);
+    setAdminChoice(subName);
+    onNavItemSelect(itemName);
     setIsOpen(!isOpen);
   };
 
@@ -77,26 +102,24 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
       <aside className={`sidebar-2 ${isOpen ? "open" : ""}`}>
         <div className="inner">
           <header className="border-b">
-          <button type="button" className="sidebar-2-burger" onClick={() => setIsOpen(!isOpen)}>
-  <span className="material-symbols-outlined">
-    {isOpen ? <AiOutlineClose /> : (
-      <>
-        <RxHamburgerMenu />
-        {/* Close all sublists if the navbar is being closed */}
-        {navItems.map(item => {
-          if (item.sublistVisible) {
-            item.sublistVisible = false;
-          }
-          return null;
-        })}
-      </>
-    )}
-  </span>
-</button>
-
+            <button type="button" className="sidebar-2-burger" onClick={() => setIsOpen(!isOpen)}>
+              <span className="material-symbols-outlined">
+                {isOpen ? <AiOutlineClose /> : (
+                  <>
+                    <RxHamburgerMenu />
+                    {navItems.map(item => {
+                      if (item.sublistVisible) {
+                        item.sublistVisible = false;
+                      }
+                      return null;
+                    })}
+                  </>
+                )}
+              </span>
+            </button>
           </header>
           <nav>
-            {navItems.map((item, index) => (
+            {userId && navItems.map((item, index) => (
               <div key={index}>
                 <button type="button" className='text-white flex justify-start items-center w-full p-3' onClick={() => handleNavItemClicked(item.name)}>
                   <span className="mr-2">
@@ -104,11 +127,12 @@ const NavigationBar = ({ onNavItemSelect, isOpen, setIsOpen }) => {
                   </span>
                   <p className={`${isOpen ? 'block ' : 'hidden'}`}>{item.name}</p>
                 </button>
-                {item.sublistVisible && (
+                {item.sublistVisible && item.sublist.length > 0 && (
                   <ul className="ml-6 bg-slate-50">
                     {item.sublist.map((sub, subIndex) => (
                       <li key={subIndex} className="border-b border-black">
-                        <button className='text-left bg-blue-200 w-full pl-1 py-2' onClick={() => handleSublistItemClick(item.name, subIndex)}>{sub}</button></li>
+                        <button className='text-left bg-blue-200 w-full pl-1 py-2' onClick={() => handleSublistItemClick(item.name, sub)}>{sub}</button>
+                      </li>
                     ))}
                   </ul>
                 )}

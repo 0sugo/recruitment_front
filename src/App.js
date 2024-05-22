@@ -23,6 +23,8 @@ import Output from './components/Output';
 import { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 import LeaveReport from './components/LeaveReport';
+import EmployeeManagement from './components/EmployeeManagement';
+import Home from './components/Home';
 
 function App() {
 
@@ -39,7 +41,7 @@ function App() {
     <div className="App">
       {/* {userId === 'admin' ? <Admin /> : <Jobs />} */}
       {/* <LoginPage /> */}
-      <Dashboard />
+      {/* <Dashboard /> */}
 
       <Routes>
         <Route path="/Personal-Details" element={< Profile/>} />
@@ -51,6 +53,7 @@ function App() {
         <Route path="/Available-jobs" element={< Jobs/>} />
         <Route path="/Register" element={< RegisterPage/>} />
         <Route path="/Login" element={< LoginPage/>} />
+        <Route path="/Home" element={< Home/>} />
         <Route path="/Admin" element={< Admin/>} />
         <Route path="/Options" element={< Options/>} />
         <Route path="/Applications" element={< Applications/>} />
@@ -59,7 +62,7 @@ function App() {
         <Route path="/All-Applications" element={< AllApplications/>} />
         <Route path="/Leave-Management" element={< LeaveForm/>} />
         {/** Handle leave application */}
-        <Route path="/LeaveReport/:id" element={<LeaveReport/>}/>
+        <Route path="/EmployeeManagement" element={<EmployeeManagement/>}/>
       </Routes>
 
       {/* <Footer /> */}

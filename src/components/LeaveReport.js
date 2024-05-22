@@ -1,68 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AiFillPrinter } from "react-icons/ai";
 import { CgNotes } from "react-icons/cg";
-import ReactToPrint from 'react-to-print';
 import coat from '../images/coat.png';
-import ReactSignatureCanvas from 'react-signature-canvas';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLeaves } from '../redux/Leave/LeaveSlice';
-// import { css } from '@emotion/react';
 import { ClipLoader } from 'react-spinners';
-import staticData from '../redux/staticdata.js';
-import { useParams } from 'react-router-dom';
 
-const LeaveReport = () => {
+const LeaveReport = ({ adminChoice }) => {
   const componentRef = useRef(null);
   const dispatch = useDispatch();
   const userId = localStorage.getItem('userId');
   const [loading, setLoading] = useState(true);
-  const signatureRef = useRef();
   const [showModal, setShowModal] = React.useState(false);
   const leaveSummary = useSelector((state) => state.leave.leaves);
-  // console.log(leaveSummary);
-
-  /**
-   * Get the ID from url parameter, passed from the navitem sublist
-   * use the id to determine the content rendered
-   * filter summary data based on the passed ID and render it accordingly
-   */
-  const { id } = useParams();
-  // const [leaveSummary, setSummaryData] = useState([]);
-
-// useEffect(() => {
-//   const renderData = () => {
-//     if (id === '0'){
-//       // this is information matching the session id
-//       const filterData = staticData.filter(item => item.id === "userID");
-//       console.log(filterData);
-//       setSummaryData(filterData);
-//     }
-//     else if (id === '1'){
-//       // this is all pending information meant for session ID
-//       // using default 0 - pending, 2 - HR's stage
-//       const filterData = staticData.filter(item => item.status === 0 && item.stage === 2);
-//       console.log(filterData);
-//       setSummaryData(filterData);
-//     }
-//     else if (id === '2'){
-//       // display the full summary of leave application
-//       console.log(staticData);
-//       setSummaryData(staticData);
-//     }
-//     else {
-//       setSummaryData([]);
-//     }
-//   };
-
-//   renderData();
-// }, [id]);
 
   useEffect(() => {
     setLoading(true);
     dispatch(getLeaves())
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
-  }, [dispatch]);
+  }, [3]);
+
 
   const formData = {
     pfNo: '123456',
@@ -95,9 +53,8 @@ const LeaveReport = () => {
 
   };
 
-/**
- * the static data
- */
+  
+
 
   return (
     <>
@@ -105,12 +62,13 @@ const LeaveReport = () => {
         <div className="flex justify-center items-center h-screen">
           <ClipLoader color={'#123abc'} loading={loading} size={90} />
         </div>
-      ) :(
+      ) : (
         <div>
           <table className="w-full table-auto ">
             <thead>
               <tr className='border-b border-slate-500'>
                 <th className='px-6 py-3'>S/N</th>
+                <th className='px-6 py-3'>Applicant Name</th>
                 <th className='px-6 py-3'>Leave Category</th>
                 <th className='px-6 py-3'>Date</th>
                 <th className='px-6 py-3'>Duration</th>
@@ -158,77 +116,145 @@ const LeaveReport = () => {
           </tr>
         </tbody> */}
 
-            <tbody>
-              {leaveSummary.map((leave, index) => (
-                <tr key={index}>
-                  <td className='px-6 py-2'>{index + 1}.</td>
-                  <td className='px-6 py-2'>{leave.leave_type}</td>
-                  {/* Replace with actual date from API */}
-                  <td className='px-6 py-2'>{leave.leave_begins_on}</td>
-                  {/* Replace with actual duration from API */}
-                  <td className='px-6 py-2'>{leave.num_of_days}</td>
-                  <td className='px-6 py-2'>
-                    {leave.status === 1 ? (
-                      <div className='flex items-center gap-5'>
-                        <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                          <span className='dot'></span>
-                        </span>
-                        <span className='text-black'>Approved</span>
-                      </div>
-                    ) : leave.status === 0 ? (
-                      <div className='flex items-center gap-5'>
-                        <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                          <span className='dot'></span>
-                        </span>
-                        <span className='text-black'>Rejected</span>
+<tbody>
+  {adminChoice === 'My Application' ? (
+    // Render only if adminChoice is 'My Application'
+    leaveSummary
+      .filter(leave => leave.user_id === parseInt(userId))
+      .map((leave, index) => (
+        <tr key={index}>
+          <td className='px-6 py-2'>{index + 1}.</td>
+          <td className='px-6 py-2'>{leave.applicant_name}</td>
+          <td className='px-6 py-2'>{leave.leave_type}</td>
+          {/* Replace with actual date from API */}
+          <td className='px-6 py-2'>{leave.applied_on}</td>
+          {/* Replace with actual duration from API */}
+          <td className='px-6 py-2'>{leave.num_of_days}</td>
+          <td className='px-6 py-2'>
+            {leave.status === 1 ? (
+              <div className='flex items-center gap-5'>
+                <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                  <span className='dot'></span>
+                </span>
+                <span className='text-black'>Approved</span>
+              </div>
+            ) : leave.status === 0 ? (
+              <div className='flex items-center gap-5'>
+                <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                  <span className='dot'></span>
+                </span>
+                <span className='text-black'>Rejected</span>
+              </div>
+            ) : (
+              <div className='flex items-center gap-5'>
+                <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                  <span className='dot'></span>
+                </span>
+                <span className='text-black'>Pending</span>
+              </div>
+            )}
+          </td>
+          {/**
+           * added the column stage: indicates where the application is currently pending
+           */}
+          <td className='px-6 py-2'>
+            {leave.stage === 'hod' ? (
+              <div className='flex items-center gap-5'>
+                <span className='text-black'>HOD</span>
+              </div>
+            ) : leave.stage === 'HR' ? (
+              <div className='flex items-center gap-5'>
+                <span className='text-black'>HRMD</span>
+              </div>
+            ) : leave.stage === 'PS' ? (
+              <div className='flex items-center gap-5'>
+                <span className='text-black'>PS</span>
+              </div>
+            ) : (
+              <div className='flex items-center gap-5'>
+                <span className='text-black'>Pending</span>
+              </div>
+            )}
+          </td>
+          {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
+          {/* <AiFillPrinter /> */}
+          {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
+          <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+            <AiFillPrinter />
+            <CgNotes />
+          </td>
+        </tr>
+      ))
+  ) : (
+    // Render all leaveSummary entries if adminChoice is not 'My Application'
+    leaveSummary.map((leave, index) => (
+      <tr key={index}>
+        <td className='px-6 py-2'>{index + 1}.</td>
+        <td className='px-6 py-2'>{leave.applicant_name}</td>
 
-                      </div>
-                    ) : (
-                      <div className='flex items-center gap-5'>
-                        <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                          <span className='dot'></span>
-                        </span>
-                        <span className='text-black'>Pending</span>
+        <td className='px-6 py-2'>{leave.leave_type}</td>
+        {/* Replace with actual date from API */}
+        <td className='px-6 py-2'>{leave.applied_on}</td>
+        {/* Replace with actual duration from API */}
+        <td className='px-6 py-2'>{leave.num_of_days}</td>
+        <td className='px-6 py-2'>
+          {leave.status === 1 ? (
+            <div className='flex items-center gap-5'>
+              <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                <span className='dot'></span>
+              </span>
+              <span className='text-black'>Approved</span>
+            </div>
+          ) : leave.status === 0 ? (
+            <div className='flex items-center gap-5'>
+              <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                <span className='dot'></span>
+              </span>
+              <span className='text-black'>Rejected</span>
+            </div>
+          ) : (
+            <div className='flex items-center gap-5'>
+              <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                <span className='dot'></span>
+              </span>
+              <span className='text-black'>Pending</span>
+            </div>
+          )}
+        </td>
+        {/**
+         * added the column stage: indicates where the application is currently pending
+         */}
+        <td className='px-6 py-2'>
+          {leave.stage === 'hod' ? (
+            <div className='flex items-center gap-5'>
+              <span className='text-black'>HOD</span>
+            </div>
+          ) : leave.stage === 'HR' ? (
+            <div className='flex items-center gap-5'>
+              <span className='text-black'>HR</span>
+            </div>
+          ) : leave.stage === 'PS' ? (
+            <div className='flex items-center gap-5'>
+              <span className='text-black'>PS</span>
+            </div>
+          ) : (
+            <div className='flex items-center gap-5'>
+              <span className='text-black'>Pending</span>
+            </div>
+          )}
+        </td>
+        {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
+        {/* <AiFillPrinter /> */}
+        {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
+        <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+          <AiFillPrinter />
+          <CgNotes />
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
 
-                      </div>
-                    )}
-                  </td>
-                {/**
-                 * added the column stage: indicates where the application is currently pending
-                 */}
-               <td className='px-6 py-2'>
-                    {leave.stage === 1 ? (
-                      <div className='flex items-center gap-5'>
-                        <span className='text-black'>HOD</span>
-                      </div>
-                    ) : leave.stage === 2 ? (
-                      <div className='flex items-center gap-5'>
-                        <span className='text-black'>HR</span>
-
-                      </div>
-                    ) : leave.stage === 3 ? (
-                      <div className='flex items-center gap-5'>
-                        <span className='text-black'>PS</span>
-
-                      </div>
-                    ) : (
-                      <div className='flex items-center gap-5'>
-                        <span className='text-black'>Pending</span>
-
-                      </div>
-                    )
-                  }
-                  </td>
-                  {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
-                    {/* <AiFillPrinter /> */}
-                    {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
-                  <td className='px-6 py-2 flex gap-2 items-center justify-center'>
-                    <AiFillPrinter />
-                    <CgNotes />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
 
 
           </table>

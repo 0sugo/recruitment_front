@@ -7,8 +7,9 @@ import { login as loginAction, selectIsAuthenticated } from '../redux/Login/auth
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Output from './Output';
+import Dashboard from './Dashboard';
 
-const LoginPage = () => {
+const LoginPage = ({setSelectedNavItem}) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const LoginPage = () => {
       if (token === 'admin') {
         navigate('/admin');
       } else {
-        navigate('/available-jobs');
+        navigate('/home');
       }
 
       toast.success('Login successful');
@@ -58,9 +59,11 @@ const LoginPage = () => {
 
 
   return (
-    <>
-    <Output />
-    <div className='flex justify-center items-center mt-20'>
+    <div className='relative'>
+    {/* <Output /> */}
+    <Dashboard />
+
+    <div className='absolute  top-[20%] left-[30%] flex justify-center items-center mt-20'>
       <div className='flex flex-col items-center bg-gray-100'>
         <form className="shadow-2xl rounded px-24 pb-6 mb-4" onSubmit={handleSubmit}>
           <h2 className=" font-bold mb-6">Login </h2>
@@ -103,13 +106,13 @@ const LoginPage = () => {
           <Link to="#" className='hover:text-[#283387] font-bold'>Forgot password?</Link>
           <div class="md:w-2/3 mb-5"></div>
           Dont have an account?
-          <NavLink to="/register" class="hover:text-[#283387] font-bold"> Register</NavLink>
+          <Link to='/register' class="hover:text-[#283387] font-bold"> Register</Link>
         </form>
 
       </div>
 
     </div>
-    </>
+    </div>
 
 
   );

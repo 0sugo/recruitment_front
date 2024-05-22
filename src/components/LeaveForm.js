@@ -11,7 +11,7 @@ import PendingLeave from './PendingLeave';
 import RejectedLeave from './RejectedLeave';
 import ApprovedLeave from './ApprovedLeave';
 
-const LeaveForm = () => {
+const LeaveForm = ({adminChoice}) => {
   const componentRef = useRef(null);
   const signatureRef = useRef();
   const dispatch = useDispatch();
@@ -21,7 +21,16 @@ const LeaveForm = () => {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [selectedComponent, setSelectedComponent] = useState('LeaveReport');
   const [formData, setFormData] = useState({});
-  console.log(personalDetails);
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    setCurrentDate(`${year}-${month}-${day}`);
+  }, []);
+
 
   const handleComponentSelect = (componentName) => {
     setSelectedComponent(componentName);
@@ -47,6 +56,7 @@ const LeaveForm = () => {
     dispatch(getFormData());
 
   }, [dispatch]);
+
 
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
   const formattedDateTime = currentDateTime.toLocaleString('en-US', options);
@@ -109,16 +119,18 @@ const LeaveForm = () => {
         </div>
         <div className='content mt-4'>
           <div className='flex flex-col items-start px-4 mb-4'>
-            <p className='mb-2 '>Leaves Taken already :</p>
-            <div className='flex justify-between w-full'>
-              <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Annual leave: 10 / 45</p>
-              <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Sick leave: 1 / 10</p>
-              <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Compassionate leave: 0 / 10</p>
-              <p className='shadow-slate-400 shadow-md p-2 rounded-md'>Total: 11 / 65</p>
-            </div>
+            <p className='mb-2 '>Leave Days taken Already :</p>
+            {/* <div className='flex justify-between w-full'>
+              {personalDetails && personalDetails.leave_types.map(individualLeave => (
+                <p key={individualLeave.leave_type_id} className='shadow-slate-400 shadow-md p-2 rounded-md'>
+                  {individualLeave.leave_type} : {individualLeave.this_year_leaves} / {individualLeave.available_days}
+                </p>
+              ))}
+            </div> */}
+
           </div>
 
-          {selectedComponent === 'LeaveReport' && <LeaveReport />}
+          {selectedComponent === 'LeaveReport' && <LeaveReport adminChoice={adminChoice} />}
           {selectedComponent === 'PendingLeave' && <PendingLeave />}
           {selectedComponent === 'ApprovedLeave' && <ApprovedLeave />}
           {selectedComponent === 'RejectedLeave' && <RejectedLeave />}
@@ -146,46 +158,46 @@ const LeaveForm = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="flex flex-wrap">
 
-                      <div className="w-full lg:w-4/12 px-6">
+                      <div className={`w-full lg:w-4/12 px-6 ${personalDetails.name === null ? '' : 'hidden'}`}>
                         <div className="w-full mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Name :
                           </label>
-                          <input type="text" name='full_name' value={formData.full_name} placeholder='e.g John Doe'
+                          <input type="text" name='full_name' value={personalDetails.name || formData.full_name} placeholder='e.g John Doe'
                             required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                       </div>
 
-                      <div className="w-full lg:w-4/12 px-6">
+                      <div className={`w-full lg:w-4/12 px-6 ${personalDetails.name === null ? '' : 'hidden'}`}>
                         <div className="w-full mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Gender :
                           </label>
-                          <select name='gender' value={formData.gender} required className="border-0 px-2 py-2  text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" >
+                          <select name='gender' value={personalDetails.gender || formData.gender} required className="border-0 px-2 py-2  text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" >
                             <option value="">Select one option</option>
-                            <option value="male">Male</option>
+                            <option value="male">Male</option>700
                             <option value="female">Female</option>
                             <option value="other">Prefor Not seay</option>
                           </select>
                         </div>
                       </div>
 
-                      <div className="w-full lg:w-4/12 px-6">
+                      <div className={`w-full lg:w-4/12 px-6 ${personalDetails.name === null ? '' : 'hidden'}`}>
                         <div className="w-full mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Department :
                           </label>
-                          <input type="text" name='department' value={formData.department} placeholder='e.g Human Resource'
+                          <input type="text" name='department' value={personalDetails.department || formData.department} placeholder='e.g Human Resource'
                             required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                       </div>
 
-                      <div className="w-full lg:w-4/12 px-6">
+                      <div className={`w-full lg:w-4/12 px-6 ${personalDetails.name === null ? '' : 'hidden'}`}>
                         <div className="w-full mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Phone Number :
                           </label>
-                          <input type="text" name='phone' value={formData.phone} placeholder='e.g 0712345678'
+                          <input type="text" name='phone' value={personalDetails.mobile_no || formData.phone} placeholder='e.g 0712345678'
                             required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                       </div>
@@ -200,13 +212,13 @@ const LeaveForm = () => {
                         </div>
                       </div>
 
-                      <div className="w-full lg:w-4/12 px-6">
+                      <div className={`w-full lg:w-4/12 px-6 ${personalDetails.name === null ? '' : 'hidden'}`}>
                         <div className="w-full mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Leave Address :
                           </label>
-                          <input type="text" name='leave_address' value={formData.leave_address} placeholder='e.g p.o box 40326-100'
-                            required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                          <input type="text" name='leave_address' value={personalDetails.postal_address || formData.leave_address} placeholder='e.g p.o box 40326-100'
+                            required className={`border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150`} />
                         </div>
                       </div>
 
@@ -271,12 +283,13 @@ const LeaveForm = () => {
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
                             Leave start Date :
                           </label>
-                          <input type="date" name='leave_begins_on' value={formData.leave_begins_on}
+                          <input type="date" name='leave_begins_on' value={formData.leave_begins_on} min={currentDate}
                             required className="border-0 px-2 py-2  text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                       </div>
 
-                      <div className="w-full mt-2 px-6 flex justify-center">
+                      <div className={`w-full mt-2 px-6 flex justify-center ${personalDetails.name === null ? '' : 'hidden'}`}>
+
                         <div className="w-full max-w-md mb-3">
                           <label className="block uppercase text-black text-xs mb-2" htmlFor="signature">
                             Signature :

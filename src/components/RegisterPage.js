@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/Registration/RegistrationSlice';
 import Output from './Output';
+import Dashboard from './Dashboard';
 
-const RegisterPage = () => {
+const RegisterPage = ({setSelectedNavItem}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -32,9 +33,10 @@ const RegisterPage = () => {
   };
 
   return (
-    <>
-      <Output />
-      <div className='flex justify-center items-center'>
+    <div className='relative'>
+      {/* <Output /> */}
+      <Dashboard />
+      <div className=' absolute  top-[20%] left-[30%] flex justify-center items-center'>
         <div className="flex flex-col items-center mt-20 bg-gray-100">
 
           <form className="shadow-2xl rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
@@ -83,12 +85,12 @@ const RegisterPage = () => {
             <button className="shadow bg-[#283387] hover:bg-[#283387]focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Register</button>
             <div class="md:w-2/3 mb-5"></div>
             Have an account?
-            <Link to="/login" class="hover:text-[#283280] font-bold"> Login</Link>
+            <Link to='/Login' className="hover:text-[#283280] font-bold"> Login</Link>
           </form>
 
         </div>
       </div>
-    </>
+    </div>
 
 
   )

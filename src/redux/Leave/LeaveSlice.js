@@ -11,7 +11,7 @@ const url = `https://sir.magicalfurnitures.co.ke/api`;
 const token = localStorage.getItem('token');
 const userId = localStorage.getItem('userId');
 
-export const getFormData = createAsyncThunk('leave/personalDetails', async (formData) => {
+export const getFormData = createAsyncThunk('leave/personalDetails', async () => {
   try {
     const config = {
       headers: {
@@ -54,10 +54,10 @@ export const getLeaves = createAsyncThunk('leave/GetLeaves', async () => {
         'Authorization': `Bearer ${token}`,
       }
     };
-    console.log('fired');
+    // console.log('fired');
 
-    const response = await axios.get(`${url}/listLeaves`,config);
-    console.log(response.data);
+    const response = await axios.get(`${url}/listLeaves`, config);
+    // console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -74,14 +74,52 @@ export const getAllLeaves = createAsyncThunk('leave/GetAllLeaves', async () => {
       }
     };
 
-    const response = await axios.get(`${url}/listLeaves`,config);
-
+    const response = await axios.get(`${url}/listLeaves`, config);
+    console.log("From LeaveSlice:", response.data);
     return response.data;
   } catch (error) {
     throw new Error('Failed to retrieve Leaves');
   }
 });
 
+// get Roles
+export const getEmployeeRoles = createAsyncThunk('/getRoles', async () => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    // console.log('fired');
+
+    const response = await axios.get(`${url}/getUsers`, config);
+    // console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Roles');
+  }
+});
+
+// update users roles and department
+// get Roles
+export const setEmployeeRoles = createAsyncThunk('/updateUser', async (userData, { rejectWithValue }) => {
+  try {
+    const { user_id, department, role } = userData;
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    console.log(token);
+    const response = await axios.put(`${url}/updateUser?user_id=${user_id}&department=${department}&role=${role}`,{}, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    // throw new Error('Failed to retrieve Roles');
+    return rejectWithValue('Failed to Update User Role');
+  }
+});
 
 
 // To be deleted
@@ -146,6 +184,33 @@ const formSlice = createSlice({
     builder.addCase(getFormData.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
+    });
+
+    {/** get user Roles   */ }
+    builder.addCase(getEmployeeRoles.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builder.addCase(getEmployeeRoles.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.employees = action.payload;
+    });
+
+    builder.addCase(getEmployeeRoles.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+
+    {/** set user Roles   */ }
+    builder.addCase(setEmployeeRoles.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(setEmployeeRoles.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload ? action.payload : 'Failed to update user';
     });
   },
 });
