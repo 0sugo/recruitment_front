@@ -17,7 +17,7 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
 
   // Define role-based sublist items
   const roleBasedSublists = {
-    // employee: ['My Applications'],
+    employee: ['My Applications'],
     HRMD: ['My Applications', 'All Applications', 'Employee Management'],
     HOD: ['My Applications', 'Employee Management'],
     admin: ['My Applications', 'Employee Management', 'All Leaves']
@@ -61,9 +61,10 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
       }
       return item;
     }));
-  }, [2]);
+  }, []);
 
   const handleNavItemClicked = (itemName) => {
+    console.log(itemName);
     const updatedNavItems = navItems.map(item => {
       if (item.name === itemName) {
         return { ...item, sublistVisible: isOpen ? !item.sublistVisible : true };
@@ -90,7 +91,7 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
 
     if (subName === 'Employee Management') {
       navigate("/EmployeeManagement");
-      alert("Emp Man Clicked");
+      // alert("Emp Man Clicked");
     }
     console.log(itemName, subName);
     setAdminChoice(subName);
