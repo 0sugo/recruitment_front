@@ -18,6 +18,7 @@ import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import EmployeeManagement from './EmployeeManagement';
 import { Link } from 'react-router-dom';
+import LeaveReport from './LeaveReport';
 
 const Dashboard = () => {
   const [selectedNavItem, setSelectedNavItem] = useState(null);
@@ -80,6 +81,7 @@ const Dashboard = () => {
             {selectedNavItem === 'Profile' && selectedNav2Item === 'referees' && <Referees isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
             {/** Employee Management */}
             {selectedNavItem === 'Employee Management' && <EmployeeManagement />}
+            {selectedNavItem === 'LeaveReport/:id' && <LeaveReport/>}
           </div>
         </div>
       </div>

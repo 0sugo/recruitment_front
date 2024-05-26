@@ -69,6 +69,7 @@ function App() {
         <Route path="/All-Applications" element={< AllApplications />} />
         <Route path="/Leave-Management" element={< LeaveForm />} />
         {/** Handle leave application */}
+        <Route path="/LeaveReport/:id" element={<LeaveReport/>}/>
         <Route path="/EmployeeManagement" element={<EmployeeManagement />} />
       </Routes>
 

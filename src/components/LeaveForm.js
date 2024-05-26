@@ -12,7 +12,7 @@ import RejectedLeave from './RejectedLeave';
 import ApprovedLeave from './ApprovedLeave';
 import Dashboard from './Dashboard';
 
-const LeaveForm = ({ adminChoice }) => {
+const LeaveForm = () => {
   const componentRef = useRef(null);
   const signatureRef = useRef();
   const dispatch = useDispatch();
@@ -131,7 +131,7 @@ const LeaveForm = ({ adminChoice }) => {
 
             </div>
 
-            {selectedComponent === 'LeaveReport' && <LeaveReport adminChoice={adminChoice} />}
+            {selectedComponent === 'LeaveReport' && <LeaveReport />}
             {selectedComponent === 'PendingLeave' && <PendingLeave />}
             {selectedComponent === 'ApprovedLeave' && <ApprovedLeave />}
             {selectedComponent === 'RejectedLeave' && <RejectedLeave />}
