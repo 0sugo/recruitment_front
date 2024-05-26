@@ -90,7 +90,7 @@ export const getEmployeeRoles = createAsyncThunk('/getRoles', async () => {
         'Authorization': `Bearer ${token}`,
       }
     };
-    // console.log('fired');
+    console.log('fired');
 
     const response = await axios.get(`${url}/getUsers`, config);
     // console.log(response.data);
