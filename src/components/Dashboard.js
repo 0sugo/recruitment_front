@@ -37,7 +37,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    window.location.href = '/';
 
   };
 
@@ -68,9 +68,9 @@ const Dashboard = () => {
           </div>
 
           <div className={` font-light ${isOpen ? 'w-10/12' : 'w-11/12'}`}>
-            
+
             {selectedNavItem === 'Profile' && <ProfNav onNav2ItemSelect={handleNav2ItemSelect} />}
-            {selectedNavItem === 'Leave Application' && <LeaveForm adminChoice={adminChoice} />}
+            {/* {selectedNavItem === 'Leave Application' && <LeaveForm adminChoice={adminChoice} />} */}
             {/* Job recruitment */}
             {selectedNavItem === 'Profile' && selectedNav2Item === 'Profile' && <Profile isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
             {selectedNavItem === 'Profile' && selectedNav2Item === 'academic' && <AcademicQualifications isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
