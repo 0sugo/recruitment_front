@@ -25,10 +25,17 @@ import Dashboard from './components/Dashboard';
 import LeaveReport from './components/LeaveReport';
 import EmployeeManagement from './components/EmployeeManagement';
 import Home from './components/Home';
+import { getEmployeeRoles } from './redux/Leave/LeaveSlice';
+import { useDispatch } from 'react-redux';
 
 function App() {
 
   const [userId, setUserId] = useState('');
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getEmployeeRoles());
+  }, [dispatch]);
+
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
@@ -44,25 +51,25 @@ function App() {
       {/* <Dashboard /> */}
 
       <Routes>
-        <Route path="/Personal-Details" element={< Profile/>} />
-        <Route path="/Academic-Qualification" element={< AcademicQualification/>} />
-        <Route path="/Professional-Qualification" element={< ProfessionalQualification/>} />
+        <Route path="/Personal-Details" element={< Profile />} />
+        <Route path="/Academic-Qualification" element={< AcademicQualification />} />
+        <Route path="/Professional-Qualification" element={< ProfessionalQualification />} />
         <Route path="/Professional-body-member" element={< MemProfBodies />} />
         <Route path="/Work-Experience" element={<WorkExperience />} />
         <Route path="/Referees" element={< Referees />} />
-        <Route path="/Available-jobs" element={< Jobs/>} />
-        <Route path="/Register" element={< RegisterPage/>} />
-        <Route path="/Login" element={< LoginPage/>} />
-        <Route path="/Home" element={< Home/>} />
-        <Route path="/Admin" element={< Admin/>} />
-        <Route path="/Options" element={< Options/>} />
-        <Route path="/Applications" element={< Applications/>} />
-        <Route path="/Shortlisted-Applications" element={< ShortlistedApplications/>} />
-        <Route path="/Rejected-Applications" element={< RejectedApplications/>} />
-        <Route path="/All-Applications" element={< AllApplications/>} />
-        <Route path="/Leave-Management" element={< LeaveForm/>} />
+        <Route path="/Available-jobs" element={< Jobs />} />
+        <Route path="/Register" element={< RegisterPage />} />
+        <Route path="/" element={< LoginPage />} />
+        <Route path="/Home" element={< Home />} />
+        <Route path="/Admin" element={< Admin />} />
+        <Route path="/Options" element={< Options />} />
+        <Route path="/Applications" element={< Applications />} />
+        <Route path="/Shortlisted-Applications" element={< ShortlistedApplications />} />
+        <Route path="/Rejected-Applications" element={< RejectedApplications />} />
+        <Route path="/All-Applications" element={< AllApplications />} />
+        <Route path="/Leave-Management" element={< LeaveForm />} />
         {/** Handle leave application */}
-        <Route path="/EmployeeManagement" element={<EmployeeManagement/>}/>
+        <Route path="/EmployeeManagement" element={<EmployeeManagement />} />
       </Routes>
 
       {/* <Footer /> */}

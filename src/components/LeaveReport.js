@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AiFillPrinter } from "react-icons/ai";
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { CgNotes } from "react-icons/cg";
 import coat from '../images/coat.png';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,9 +11,27 @@ const LeaveReport = ({ adminChoice }) => {
   const componentRef = useRef(null);
   const dispatch = useDispatch();
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = React.useState(false);
   const leaveSummary = useSelector((state) => state.leave.leaves);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const totalPages = Math.ceil(leaveSummary.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = leaveSummary.slice(startIndex, endIndex);
+
+  const goToPrevPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -53,7 +72,15 @@ const LeaveReport = ({ adminChoice }) => {
 
   };
 
-  
+  const handleApprove = () =>{
+    console.log('Approve');
+  }
+
+  const handleReject = () =>{
+    console.log('Reject');
+  }
+
+
 
 
   return (
@@ -72,6 +99,7 @@ const LeaveReport = ({ adminChoice }) => {
                 <th className='px-6 py-3'>Leave Category</th>
                 <th className='px-6 py-3'>Date</th>
                 <th className='px-6 py-3'>Duration</th>
+                {role === 'admin' || 'hod' && <th className='px-6 py-3'>Approve/Reject</th>}
                 <th className='px-6 py-3'>Status</th>
                 <th className='px-6 py-3'>Stage</th>
                 <th className='px-6 py-3'>View</th>
@@ -79,181 +107,201 @@ const LeaveReport = ({ adminChoice }) => {
             </thead>
 
             {/* <tbody>
-          <tr>
-            <td className='px-6 py-2'>1.</td>
-            <td className='px-6 py-2'>Annual</td>
-            <td className='px-6 py-2'>12-08-2024</td>
-            <td className='px-6 py-2'>7</td>
-            <td className='px-6 py-2 '><span className='bg-red-600 p-1 text-white rounded-sm inline-block w-20 text-center'>Rejected</span></td>
-            <td className='px-6 py-2 flex gap-2 items-center justify-center'>
-              <ReactToPrint trigger={() => <AiFillPrinter className=''><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} />
-              <span><CgNotes /></span>
-            </td>
-          </tr>
-          <tr>
-            <td className='px-6 py-2'>2.</td>
-            <td className='px-6 py-2'>Annual</td>
-            <td className='px-6 py-2'>12-08-2024</td>
-            <td className='px-6 py-2'>12</td>
-            <td className='px-6 py-2 '><span className='bg-green-600 p-1 text-white rounded-sm w-20 text-center'>Approved</span></td>
-            <td className='px-6 py-2 flex gap-2 items-center justify-center'>
-              <span><AiFillPrinter /></span>
-              <span><CgNotes /></span>
-            </td>
+            <tr>
+              <td className='px-6 py-2'>1.</td>
+              <td className='px-6 py-2'>Annual</td>
+              <td className='px-6 py-2'>12-08-2024</td>
+              <td className='px-6 py-2'>7</td>
+              <td className='px-6 py-2 '><span className='bg-red-600 p-1 text-white rounded-sm inline-block w-20 text-center'>Rejected</span></td>
+              <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+                <ReactToPrint trigger={() => <AiFillPrinter className=''><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} />
+                <span><CgNotes /></span>
+              </td>
+            </tr>
+            <tr>
+              <td className='px-6 py-2'>2.</td>
+              <td className='px-6 py-2'>Annual</td>
+              <td className='px-6 py-2'>12-08-2024</td>
+              <td className='px-6 py-2'>12</td>
+              <td className='px-6 py-2 '><span className='bg-green-600 p-1 text-white rounded-sm w-20 text-center'>Approved</span></td>
+              <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+                <span><AiFillPrinter /></span>
+                <span><CgNotes /></span>
+              </td>
 
-          </tr>
-          <tr>
-            <td className='px-6 py-2'>3.</td>
-            <td className='px-6 py-2'>Sick</td>
-            <td className='px-6 py-2'>12-08-2024</td>
-            <td className='px-6 py-2'>5</td>
-            <td className='px-6 py-2 '><span className='bg-orange-600 p-1 text-white rounded-sm w-20 inline-block text-center'>Pending</span></td>
-            <td className='px-6 py-2 flex gap-2 items-center justify-center'>
-              <span><AiFillPrinter /></span>
-              <span><CgNotes /></span>
-            </td>
+            </tr>
+            <tr>
+              <td className='px-6 py-2'>3.</td>
+              <td className='px-6 py-2'>Sick</td>
+              <td className='px-6 py-2'>12-08-2024</td>
+              <td className='px-6 py-2'>5</td>
+              <td className='px-6 py-2 '><span className='bg-orange-600 p-1 text-white rounded-sm w-20 inline-block text-center'>Pending</span></td>
+              <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+                <span><AiFillPrinter /></span>
+                <span><CgNotes /></span>
+              </td>
 
-          </tr>
-        </tbody> */}
+            </tr>
+          </tbody> */}
 
-<tbody>
-  {adminChoice === 'My Application' ? (
-    // Render only if adminChoice is 'My Application'
-    leaveSummary
-      .filter(leave => leave.user_id === parseInt(userId))
-      .map((leave, index) => (
-        <tr key={index}>
-          <td className='px-6 py-2'>{index + 1}.</td>
-          <td className='px-6 py-2'>{leave.applicant_name}</td>
-          <td className='px-6 py-2'>{leave.leave_type}</td>
-          {/* Replace with actual date from API */}
-          <td className='px-6 py-2'>{leave.applied_on}</td>
-          {/* Replace with actual duration from API */}
-          <td className='px-6 py-2'>{leave.num_of_days}</td>
-          <td className='px-6 py-2'>
-            {leave.status === 1 ? (
-              <div className='flex items-center gap-5'>
-                <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                  <span className='dot'></span>
-                </span>
-                <span className='text-black'>Approved</span>
-              </div>
-            ) : leave.status === 0 ? (
-              <div className='flex items-center gap-5'>
-                <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                  <span className='dot'></span>
-                </span>
-                <span className='text-black'>Rejected</span>
-              </div>
-            ) : (
-              <div className='flex items-center gap-5'>
-                <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                  <span className='dot'></span>
-                </span>
-                <span className='text-black'>Pending</span>
-              </div>
-            )}
-          </td>
-          {/**
+            <tbody>
+              {adminChoice === 'My Application' ? (
+                // Render only if adminChoice is 'My Application'
+                currentItems
+                  .filter(leave => leave.user_id === parseInt(userId))
+                  .map((leave, index) => (
+                    <tr key={index}>
+                      <td className='px-6 py-2'>{index + 1}.</td>
+                      <td className='px-6 py-2'>{leave.applicant_name}</td>
+                      <td className='px-6 py-2'>{leave.leave_type}</td>
+                      {/* Replace with actual date from API */}
+                      <td className='px-6 py-2'>{leave.applied_on}</td>
+                      {/* Replace with actual duration from API */}
+                      <td className='px-6 py-2'>{leave.num_of_days}</td>
+                      <td className='px-6 py-2'>
+                        {leave.status === 1 ? (
+                          <div className='flex items-center gap-5'>
+                            <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                              <span className='dot'></span>
+                            </span>
+                            <span className='text-black'>Approved</span>
+                          </div>
+                        ) : leave.status === 0 ? (
+                          <div className='flex items-center gap-5'>
+                            <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                              <span className='dot'></span>
+                            </span>
+                            <span className='text-black'>Rejected</span>
+                          </div>
+                        ) : (
+                          <div className='flex items-center gap-5'>
+                            <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                              <span className='dot'></span>
+                            </span>
+                            <span className='text-black'>Pending</span>
+                          </div>
+                        )}
+                      </td>
+                      {/**
            * added the column stage: indicates where the application is currently pending
            */}
-          <td className='px-6 py-2'>
-            {leave.stage === 'hod' ? (
-              <div className='flex items-center gap-5'>
-                <span className='text-black'>HOD</span>
-              </div>
-            ) : leave.stage === 'HR' ? (
-              <div className='flex items-center gap-5'>
-                <span className='text-black'>HRMD</span>
-              </div>
-            ) : leave.stage === 'PS' ? (
-              <div className='flex items-center gap-5'>
-                <span className='text-black'>PS</span>
-              </div>
-            ) : (
-              <div className='flex items-center gap-5'>
-                <span className='text-black'>Pending</span>
-              </div>
-            )}
-          </td>
-          {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
-          {/* <AiFillPrinter /> */}
-          {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
-          <td className='px-6 py-2 flex gap-2 items-center justify-center'>
-            <AiFillPrinter />
-            <CgNotes />
-          </td>
-        </tr>
-      ))
-  ) : (
-    // Render all leaveSummary entries if adminChoice is not 'My Application'
-    leaveSummary.map((leave, index) => (
-      <tr key={index}>
-        <td className='px-6 py-2'>{index + 1}.</td>
-        <td className='px-6 py-2'>{leave.applicant_name}</td>
+                      <td className='px-6 py-2'>
+                        {leave.stage === 'hod' ? (
+                          <div className='flex items-center gap-5'>
+                            <span className='text-black'>HOD</span>
+                          </div>
+                        ) : leave.stage === 'HR' ? (
+                          <div className='flex items-center gap-5'>
+                            <span className='text-black'>HRMD</span>
+                          </div>
+                        ) : leave.stage === 'PS' ? (
+                          <div className='flex items-center gap-5'>
+                            <span className='text-black'>PS</span>
+                          </div>
+                        ) : (
+                          <div className='flex items-center gap-5'>
+                            <span className='text-black'>Pending</span>
+                          </div>
+                        )}
+                      </td>
+                      {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
+                      {/* <AiFillPrinter /> */}
+                      {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
+                      <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+                        <AiFillPrinter />
+                        <CgNotes />
+                      </td>
+                    </tr>
+                  ))
+              ) : (
+                // Render all leaveSummary entries if adminChoice is not 'My Application'
+                currentItems.map((leave, index) => (
+                  <tr key={index}>
+                    <td className='px-6 py-2'>{startIndex + 1 + index}.</td>
+                    <td className='px-6 py-2'>{leave.applicant_name}</td>
 
-        <td className='px-6 py-2'>{leave.leave_type}</td>
-        {/* Replace with actual date from API */}
-        <td className='px-6 py-2'>{leave.applied_on}</td>
-        {/* Replace with actual duration from API */}
-        <td className='px-6 py-2'>{leave.num_of_days}</td>
-        <td className='px-6 py-2'>
-          {leave.status === 1 ? (
-            <div className='flex items-center gap-5'>
-              <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                <span className='dot'></span>
-              </span>
-              <span className='text-black'>Approved</span>
+                    <td className='px-6 py-2'>{leave.leave_type}</td>
+                    {/* Replace with actual date from API */}
+                    <td className='px-6 py-2'>{leave.applied_on}</td>
+                    {/* Replace with actual duration from API */}
+                    <td className='px-6 py-2'>{leave.num_of_days}</td>
+                   { role==='admin'?( <td className='px-6 py-2'>
+                      <span className='text-green-600 cursor-pointer' onClick={()=>handleApprove()}>Approve</span>
+                      <span className='text-red-600 cursor-pointer' onClick={()=>handleReject()}>Reject</span>
+                    </td>):''}
+                    <td className='px-6 py-2'>
+                      {leave.status === 1 ? (
+                        <div className='flex items-center gap-5'>
+                          <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                            <span className='dot'></span>
+                          </span>
+                          <span className='text-black'>Approved</span>
+                        </div>
+                      ) : leave.status === 0 ? (
+                        <div className='flex items-center gap-5'>
+                          <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                            <span className='dot'></span>
+                          </span>
+                          <span className='text-black'>Rejected</span>
+                        </div>
+                      ) : (
+                        <div className='flex items-center gap-5'>
+                          <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                            <span className='dot'></span>
+                          </span>
+                          <span className='text-black'>Pending</span>
+                        </div>
+                      )}
+                    </td>
+                    {/**
+             * added the column stage: indicates where the application is currently pending
+          */}
+                    <td className='px-6 py-2'>
+                      {leave.stage === 'hod' ? (
+                        <div className='flex items-center gap-5'>
+                          <span className='text-black'>HOD</span>
+                        </div>
+                      ) : leave.stage === 'HR' ? (
+                        <div className='flex items-center gap-5'>
+                          <span className='text-black'>HR</span>
+                        </div>
+                      ) : leave.stage === 'PS' ? (
+                        <div className='flex items-center gap-5'>
+                          <span className='text-black'>PS</span>
+                        </div>
+                      ) : (
+                        <div className='flex items-center gap-5'>
+                          <span className='text-black'>Pending</span>
+                        </div>
+                      )}
+                    </td>
+                    {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
+                    {/* <AiFillPrinter /> */}
+                    {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
+                    <td className='px-6 py-2 flex gap-2 items-center justify-center'>
+                      <AiFillPrinter />
+                      <CgNotes />
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+
+            {/* Pagination controls */}
+            <div className="flex items-center justify-center mt-4">
+              {/* Back button */}
+              <button onClick={goToPrevPage} disabled={currentPage === 1}>
+                <AiOutlineLeft />
+              </button>
+
+              {/* Current page number */}
+              <span className="mx-2">{currentPage}</span>
+
+              {/* Next button */}
+              <button onClick={goToNextPage} disabled={currentPage === totalPages}>
+                <AiOutlineRight />
+              </button>
             </div>
-          ) : leave.status === 0 ? (
-            <div className='flex items-center gap-5'>
-              <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                <span className='dot'></span>
-              </span>
-              <span className='text-black'>Rejected</span>
-            </div>
-          ) : (
-            <div className='flex items-center gap-5'>
-              <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                <span className='dot'></span>
-              </span>
-              <span className='text-black'>Pending</span>
-            </div>
-          )}
-        </td>
-        {/**
-         * added the column stage: indicates where the application is currently pending
-         */}
-        <td className='px-6 py-2'>
-          {leave.stage === 'hod' ? (
-            <div className='flex items-center gap-5'>
-              <span className='text-black'>HOD</span>
-            </div>
-          ) : leave.stage === 'HR' ? (
-            <div className='flex items-center gap-5'>
-              <span className='text-black'>HR</span>
-            </div>
-          ) : leave.stage === 'PS' ? (
-            <div className='flex items-center gap-5'>
-              <span className='text-black'>PS</span>
-            </div>
-          ) : (
-            <div className='flex items-center gap-5'>
-              <span className='text-black'>Pending</span>
-            </div>
-          )}
-        </td>
-        {/* <td className='px-6 py-2 flex gap-2 items-center justify-center'> */}
-        {/* <AiFillPrinter /> */}
-        {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
-        <td className='px-6 py-2 flex gap-2 items-center justify-center'>
-          <AiFillPrinter />
-          <CgNotes />
-        </td>
-      </tr>
-    ))
-  )}
-</tbody>
 
 
 
