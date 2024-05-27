@@ -58,7 +58,7 @@ const Dashboard = () => {
               {/* <img src={profile} alt='profile' className='w-7 h-7' /> */}
               <BsFillPersonFill className='size-7' />
               {userId ? (     <button className='bg-white text-[#283387] px-2 mt-3 py-1 float-right rounded-lg' onClick={handleLogout}>
-                    <a href='/login' className='p-4 hover:bg-inherit rounded-lg'>Logout</a>
+                    <a href='/' className='p-4 hover:bg-inherit rounded-lg'>Logout</a>
                   </button>) :
                 (
                   <Link to='/login' className='bg-white text-[#283387] px-2 mt-3 py-1 float-right rounded-lg'>Login</Link>
