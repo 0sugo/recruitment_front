@@ -6,8 +6,13 @@ import coat from '../images/coat.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLeaves } from '../redux/Leave/LeaveSlice';
 import { ClipLoader } from 'react-spinners';
+import Dashboard from './Dashboard';
+import { useParams } from 'react-router-dom';
 
-const LeaveReport = ({ adminChoice }) => {
+const LeaveReport = () => {
+
+  const adminChoice = useParams();
+
   const componentRef = useRef(null);
   const dispatch = useDispatch();
   const userId = localStorage.getItem('userId');
@@ -84,7 +89,8 @@ const LeaveReport = ({ adminChoice }) => {
 
 
   return (
-    <>
+    <div className='realtive'>
+      <Dashboard/>
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <ClipLoader color={'#123abc'} loading={loading} size={90} />
@@ -145,7 +151,7 @@ const LeaveReport = ({ adminChoice }) => {
           </tbody> */}
 
             <tbody>
-              {adminChoice === 'My Application' ? (
+              {adminChoice === 'My Applications' ? (
                 // Render only if adminChoice is 'My Application'
                 currentItems
                   .filter(leave => leave.user_id === parseInt(userId))
@@ -443,7 +449,7 @@ const LeaveReport = ({ adminChoice }) => {
 
       )}
 
-    </>
+    </div>
   )
 }
 
