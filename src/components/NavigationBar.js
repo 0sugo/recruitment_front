@@ -5,12 +5,15 @@ import { BsPersonFill, BsPersonFillUp } from 'react-icons/bs';
 import { AiOutlineClose } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
+import { getLeaves } from '../redux/Leave/LeaveSlice';
+import { useDispatch } from 'react-redux';
 
 // Fetch the role from local storage
 const role = localStorage.getItem('role');
 const userId = localStorage.getItem('userId');
 
 const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
@@ -19,8 +22,9 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
   const roleBasedSublists = {
     employee: ['My Applications'],
     hrmd: ['My Applications', 'All Applications', 'Employee Management'],
-    hod: ['My Applications', 'Employee Management'],
-    admin: ['My Applications', 'Employee Management', 'All Leaves']
+    hod: ['My Applications', 'All Applications'],
+    ps: ['My Applications', 'All Applications'],
+    admin: ['My Applications', 'Employee Management', 'All Leaves','All Applications']
   };
 
   // Determine the allowed sublist items for the current role
@@ -92,15 +96,16 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
     if (subName === 'Employee Management') {
       navigate("/EmployeeManagement");
     }
-    else if (itemName === 'Leave Application' || (itemName === 'Leave Application'  && subName === 'My Applications'))
-      {
-        // (itemName && navigate(`/LeaveReport/${"My Applications"}`));
-        (subName && navigate(`/LeaveReport/${subName}`));
-      }
-    else if (itemName === 'Leave Application' && subName === 'All Leaves')
-      {
-        navigate(`/LeaveReport/${subName}`);
-      }
+    else if (subName === 'My Applications') {
+      navigate("/MyApplications");
+    }
+    else if (subName === 'All Applications') {
+      navigate("/AllLeaveApplications");
+    }
+
+    else if (subName === 'All Leaves') {
+      navigate(`/allLeaves`);
+    }
     console.log(itemName, subName);
     setAdminChoice(subName);
     onNavItemSelect(itemName);
