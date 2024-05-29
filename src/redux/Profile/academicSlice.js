@@ -18,7 +18,6 @@ export const postAcademicQualifications = (academicData, userId) => async (dispa
   try {
     const response = await axios.post(`https://sir.magicalfurnitures.co.ke/api/academicQualification/${userId}`, academicData);
 
-    console.log('Server Response:', response.data);
     dispatch(updateAcademicQualifications(response.data));
   } catch (error) {
     console.error('Error posting academic qualifications:', error);
