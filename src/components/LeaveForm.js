@@ -203,15 +203,15 @@ const LeaveForm = () => {
                           </div>
                         </div>
 
-                      <div className="w-full lg:w-4/12 px-6">
-                        <div className="w-full mb-3">
-                          <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
-                            Designation :
-                          </label>
-                          <input type="text" name='designation' value={formData.designation} placeholder='e.g ICT officer'
-                            required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        <div className="w-full lg:w-4/12 px-6">
+                          <div className="w-full mb-3">
+                            <label className="block uppercase text-black text-xs mb-2" htmlFor="grid-password">
+                              Designation :
+                            </label>
+                            <input type="text" name='designation' value={formData.designation} placeholder='e.g ICT officer'
+                              required className="border-0 px-2 py-2  text-black bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                          </div>
                         </div>
-                      </div>
 
                         <div className={`w-full lg:w-4/12 px-6 ${personalDetails.name === null ? '' : 'hidden'}`}>
                           <div className="w-full mb-3">
