@@ -8,7 +8,7 @@ const ProfNav = ({ onNav2ItemSelect }) => {
   const handleComponentSelect = (componentName) => {
     onNav2ItemSelect(componentName);
     setActivator(componentName);
-    console.log(activator);
+    // console.log(activator);
 
   };
 
