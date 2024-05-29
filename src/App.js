@@ -27,6 +27,8 @@ import EmployeeManagement from './components/EmployeeManagement';
 import Home from './components/Home';
 import { getEmployeeRoles } from './redux/Leave/LeaveSlice';
 import { useDispatch } from 'react-redux';
+import AllLeaves from './components/AllLeaves';
+import AllLeaveApplications from './components/AllLeaveApplications';
 
 function App() {
 
@@ -69,7 +71,11 @@ function App() {
         <Route path="/All-Applications" element={< AllApplications />} />
         <Route path="/Leave-Management" element={< LeaveForm />} />
         {/** Handle leave application */}
-        <Route path="/LeaveReport/:id" element={<LeaveReport/>}/>
+        {/* <Route path="/LeaveReport/:id" element={<LeaveReport/>}/> */}
+        <Route path="/MyApplications" element={<LeaveForm />} />
+        <Route path="/LeaveReport" element={<LeaveForm />} />
+        <Route path="/AllLeaves" element={<AllLeaves />} />
+        <Route path="/AllLeaveApplications" element={<AllLeaveApplications />} />
         <Route path="/EmployeeManagement" element={<EmployeeManagement />} />
       </Routes>
 
