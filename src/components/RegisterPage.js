@@ -25,7 +25,7 @@ const RegisterPage = ({setSelectedNavItem}) => {
     try {
       await dispatch(registerUser(userData));
       setTimeout(() => {
-        navigate('/login');
+        navigate('/');
       }, 5000);
     } catch (error) {
       console.error('Registration failed:', error);
@@ -85,7 +85,7 @@ const RegisterPage = ({setSelectedNavItem}) => {
             <button className="shadow bg-[#283387] hover:bg-[#283387]focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Register</button>
             <div class="md:w-2/3 mb-5"></div>
             Have an account?
-            <Link to='/Login' className="hover:text-[#283280] font-bold"> Login</Link>
+            <Link to='/' className="hover:text-[#283280] font-bold"> Login</Link>
           </form>
 
         </div>
