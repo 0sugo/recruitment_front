@@ -53,7 +53,7 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
       name: "Leave Application",
       icon: MdFlight,
       sublistVisible: false,
-      sublist: [],  // initially empty
+      sublist: [],
     }
   ]);
 
@@ -68,7 +68,6 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
   }, []);
 
   const handleNavItemClicked = (itemName) => {
-    console.log(itemName);
     const updatedNavItems = navItems.map(item => {
       if (item.name === itemName) {
         return { ...item, sublistVisible: isOpen ? !item.sublistVisible : true };
@@ -106,7 +105,6 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
     else if (subName === 'All Leaves') {
       navigate(`/allLeaves`);
     }
-    console.log(itemName, subName);
     setAdminChoice(subName);
     onNavItemSelect(itemName);
     setIsOpen(!isOpen);
