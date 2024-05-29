@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { approveRejectHod, approveRejectPs, getLeaves } from '../redux/Leave/LeaveSlice';
+import { approveRejectHod, approveRejectHrmd, approveRejectPs, getLeaves } from '../redux/Leave/LeaveSlice';
 // import { approveRejectHod, getLeaves } from '../redux/Leave/LeaveSlice';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import Dashboard from './Dashboard';
@@ -12,7 +12,6 @@ const AllLeaveApplications = () => {
   const userId = localStorage.getItem('userId');
   const role = localStorage.getItem('role');
   const leaveSubjects = useSelector((state) => state.leave.leaves);
-  console.log(leaveSubjects);
 
   useEffect(() => {
     dispatch(getLeaves())
@@ -30,11 +29,13 @@ const AllLeaveApplications = () => {
     if (role === 'hod') {
       dispatch(approveRejectHod(payload));
     }
-    else {
-      dispatch(approveRejectHod(payload));
+    else if (role === 'ps'){
+      dispatch(approveRejectPs(payload));
+    }else{
+      console.log('Approve');
+      dispatch(approveRejectHrmd(payload));
     }
 
-    // dispatch(approveRejectHod(payload));
     console.log('Approve');
   }
 
@@ -47,8 +48,15 @@ const AllLeaveApplications = () => {
       rejected: 1,
       recommend_other: 0
     };
-    dispatch(approveRejectHod(payload));
-    console.log('Rejected');
+    if (role === 'hod') {
+      dispatch(approveRejectHod(payload));
+    }
+    else if (role === 'ps'){
+      dispatch(approveRejectPs(payload));
+    }else{
+      console.log('Approve');
+      dispatch(approveRejectHrmd(payload));
+    }
   }
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,9 +76,6 @@ const AllLeaveApplications = () => {
     setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
   };
 
-  // const leaveSubjects = useSelector((state) => state.leave.leaves);
-  // // console.log(leaveSubjects);
-
   return (
     <div className="relative h-fit bg-gray-100 p-4">
       <Dashboard />
@@ -89,13 +94,13 @@ const AllLeaveApplications = () => {
                 <th className="px-6 py-3 border">Applied date</th>
                 <th className="px-6 py-3 border">Action</th>
                 <th className="px-6 py-3 border">Start date</th>
-                <th className="px-6 py-3 border">Stage</th>
+                {/* <th className="px-6 py-3 border">Stage</th> */}
               </tr>
             </thead>
             <tbody>
               {currentItems.map((leave, index) => (
                 <tr key={index} className="odd:bg-white even:bg-gray-50">
-                  <td className="px-6 py-3 border text-center">{leave.employee_id}</td>
+                  <td className="px-6 py-3 border text-center">{index+1}</td>
                   <td className="px-6 py-3 border text-center">{leave.applicant_name}</td>
                   <td className="px-6 py-3 border text-center">{leave.leave_type}</td>
                   <td className="px-6 py-3 border text-center">{leave.num_of_days}</td>
@@ -117,7 +122,7 @@ const AllLeaveApplications = () => {
                     </div>
                   </td>
                   <td className="px-6 py-3 border text-center">{leave.start_date}</td>
-                  <td className="px-6 py-3 border text-center">{leave.stage}</td>
+                  {/* <td className="px-6 py-3 border text-center">{leave.stage}</td> */}
                 </tr>
               ))}
             </tbody>
