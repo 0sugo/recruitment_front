@@ -87,7 +87,6 @@ const LeaveForm = () => {
       date: new Date().toISOString().split('T')[0],
     };
 
-    console.log(formData);
     dispatch(submitForm(formData));
 
     setSignatureDataUrl(signatureData);
@@ -97,7 +96,6 @@ const LeaveForm = () => {
     signatureRef.current.clear();
   };
 
-  // console.log(leaves);
   return (
     <div className='relative'>
       <Dashboard />
@@ -121,13 +119,14 @@ const LeaveForm = () => {
           <div className='content mt-4'>
             <div className='flex flex-col items-start px-4 mb-4'>
               <p className='mb-2 '>Leave Days taken Already :</p>
-              {/* <div className='flex justify-between w-full'>
-              {personalDetails && personalDetails.leave_types.map(individualLeave => (
-                <p key={individualLeave.leave_type_id} className='shadow-slate-400 shadow-md p-2 rounded-md'>
-                  {individualLeave.leave_type} : {individualLeave.this_year_leaves} / {individualLeave.available_days}
-                </p>
-              ))}
-            </div> */}
+              <div className='flex justify-between w-full'>
+                {personalDetails && personalDetails.leave_types.map(individualLeave => (
+                  <p key={individualLeave.leave_type_id} className='shadow-slate-400 shadow-md p-2 rounded-md'>
+                    {individualLeave.leave_type} : {individualLeave.this_year_leaves} / {individualLeave.available_days}
+                  </p>
+                )
+                )}
+              </div>
 
             </div>
 
