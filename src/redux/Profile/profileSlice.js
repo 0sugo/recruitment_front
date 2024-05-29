@@ -15,7 +15,6 @@ export const postPersonalDetails = (personalDetails,userId) => async (dispatch) 
     };
     const response = await axios.post(`https://magicalfurnitures.co.ke/recruitment/public/api/personalDetails/${userId}`, personalDetails, config);
 
-    console.log('Server Response:', response.data);
     dispatch(updatePersonalDetails(response.data));
   } catch (error) {
     console.error('Error posting personal details:', error);
