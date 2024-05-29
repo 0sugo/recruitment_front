@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { approveRejectHod, getLeaves } from '../redux/Leave/LeaveSlice';
+import { approveRejectHod, approveRejectPs, getLeaves } from '../redux/Leave/LeaveSlice';
 import Dashboard from './Dashboard';
 import { TiTick } from "react-icons/ti";
 import { MdCancel } from "react-icons/md";
@@ -8,6 +8,7 @@ import { MdCancel } from "react-icons/md";
 const AllLeaveApplications = () => {
   const dispatch = useDispatch();
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
 
   useEffect(() => {
     dispatch(getLeaves())
@@ -22,7 +23,14 @@ const AllLeaveApplications = () => {
       rejected: 0,
       recommend_other: 1
     };
-    dispatch(approveRejectHod(payload));
+    if (role === 'hod') {
+      dispatch(approveRejectHod(payload));
+    }
+    else {
+      dispatch(approveRejectHod(payload));
+    }
+
+    // dispatch(approveRejectHod(payload));
     console.log('Approve');
   }
 
@@ -41,7 +49,7 @@ const AllLeaveApplications = () => {
 
 
   const leaveSubjects = useSelector((state) => state.leave.leaves);
-  console.log(leaveSubjects);
+  // console.log(leaveSubjects);
 
   return (
     <div className="relative">

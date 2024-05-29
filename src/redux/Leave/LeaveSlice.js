@@ -140,6 +140,27 @@ export const approveRejectHod = createAsyncThunk('/ApproveRejectLeave', async (p
   }
 });
 
+export const approveRejectPs = createAsyncThunk('/ApproveRejectLeavePs', async (payload) => {
+  const { user_id, leave_app_id, approved, rejected, recommend_other } = payload;
+
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    const response = await axios.put(`${url}/psApproveReject`, {
+      user_id,
+      leave_app_id,
+      approved,
+      rejected,
+      recommend_other
+    }, config);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Roles');
+  }
+});
 // Get user specific leaves
 
 export const getMyLeaves = createAsyncThunk('leave/GetPersonalLeaves', async () => {
