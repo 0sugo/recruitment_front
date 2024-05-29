@@ -22,7 +22,7 @@ export const getFormData = createAsyncThunk('leave/personalDetails', async () =>
 
     const response = await axios.get(`${url}/applyLeave`, config);
 
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error('Failed to submit form');
@@ -54,7 +54,6 @@ export const getLeaves = createAsyncThunk('leave/GetLeaves', async () => {
         'Authorization': `Bearer ${token}`,
       }
     };
-    // console.log('fired');
 
     const response = await axios.get(`${url}/listLeaves`, config);
     // console.log(response.data);
@@ -90,7 +89,7 @@ export const getEmployeeRoles = createAsyncThunk('/getRoles', async () => {
         'Authorization': `Bearer ${token}`,
       }
     };
-    console.log('fired');
+    // console.log('fired');
 
     const response = await axios.get(`${url}/getUsers`, config);
     // console.log(response.data);
@@ -111,9 +110,7 @@ export const setEmployeeRoles = createAsyncThunk('/updateUser', async (userData,
         'Authorization': `Bearer ${token}`,
       }
     };
-    console.log(token);
     const response = await axios.put(`${url}/updateUser?user_id=${user_id}&department=${department}&role=${role}`,{}, config);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     // throw new Error('Failed to retrieve Roles');
@@ -121,20 +118,60 @@ export const setEmployeeRoles = createAsyncThunk('/updateUser', async (userData,
   }
 });
 
+export const approveRejectHod = createAsyncThunk('/ApproveRejectLeave', async (payload) => {
+  const { user_id, leave_app_id, approved, rejected, recommend_other } = payload;
 
-// To be deleted
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    const response = await axios.put(`${url}/hodApproveReject`, {
+      user_id,
+      leave_app_id,
+      approved,
+      rejected,
+      recommend_other
+    }, config);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Roles');
+  }
+});
 
-// export const getAllLeaves = createAsyncThunk('leave/GetLeaves', async () => {
-//   try {
-//     const userId = localStorage.getItem('userId');
-//     const response = await axios.get(`${url}/getMyLeaves/${userId}`);
-//     // const response = await axios.get(`${url}/getMyLeaves/110`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error('Failed to retrieve Leaves');
-//   }
-// });
+// Get user specific leaves
 
+export const getMyLeaves = createAsyncThunk('leave/GetPersonalLeaves', async () => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    const response = await axios.get(`${url}/getMyLeaves`,config);
+    // console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Leaves');
+  }
+});
+
+// Populate leave Form data
+export const populateLeaveForm = createAsyncThunk('leave/populateLeaveForm', async (leaveReportId) => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+
+    const response = await axios.get(`${url}/getLeaveReport/${userId}/${leaveReportId}`, config);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Leaves');
+  }
+});
 
 const formSlice = createSlice({
   name: 'LeaveForm',
@@ -182,6 +219,35 @@ const formSlice = createSlice({
     });
 
     builder.addCase(getFormData.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+
+    // Get all Leaves
+    builder.addCase(getMyLeaves.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getMyLeaves.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.myLeaves = action.payload;
+    });
+    builder.addCase(getMyLeaves.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+    // Populate leave form
+    builder.addCase(populateLeaveForm.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(populateLeaveForm.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.leaveData = action.payload;
+    });
+    builder.addCase(populateLeaveForm.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     });
