@@ -22,7 +22,6 @@ export const getFormData = createAsyncThunk('leave/personalDetails', async () =>
 
     const response = await axios.get(`${url}/applyLeave`, config);
 
-    // console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error('Failed to submit form');
@@ -56,7 +55,6 @@ export const getLeaves = createAsyncThunk('leave/GetLeaves', async () => {
     };
 
     const response = await axios.get(`${url}/listLeaves`, config);
-    // console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -74,7 +72,6 @@ export const getAllLeaves = createAsyncThunk('leave/GetAllLeaves', async () => {
     };
 
     const response = await axios.get(`${url}/listLeaves`, config);
-    console.log("From LeaveSlice:", response.data);
     return response.data;
   } catch (error) {
     throw new Error('Failed to retrieve Leaves');
@@ -89,10 +86,8 @@ export const getEmployeeRoles = createAsyncThunk('/getRoles', async () => {
         'Authorization': `Bearer ${token}`,
       }
     };
-    // console.log('fired');
 
     const response = await axios.get(`${url}/getUsers`, config);
-    // console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -161,6 +156,28 @@ export const approveRejectPs = createAsyncThunk('/ApproveRejectLeavePs', async (
     throw new Error('Failed to retrieve Roles');
   }
 });
+
+export const approveRejectHrmd = createAsyncThunk('/ApproveRejectLeaveHrmd', async (payload) => {
+  const { user_id, leave_app_id, approved, rejected, recommend_other } = payload;
+
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    const response = await axios.put(`${url}/hrmdApproveReject`, {
+      user_id,
+      leave_app_id,
+      approved,
+      rejected,
+      recommend_other
+    }, config);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Roles');
+  }
+});
 // Get user specific leaves
 
 export const getMyLeaves = createAsyncThunk('leave/GetPersonalLeaves', async () => {
@@ -171,7 +188,6 @@ export const getMyLeaves = createAsyncThunk('leave/GetPersonalLeaves', async () 
       }
     };
     const response = await axios.get(`${url}/getMyLeaves`,config);
-    // console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error('Failed to retrieve Leaves');
