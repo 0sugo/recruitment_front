@@ -57,49 +57,54 @@ const EmployeeManagement = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div className="relative">
+        <div className="relative h-fit bg-gray-100 p-4">
             <Dashboard />
 
-            <div className="absolute top-[9%] left-[25%] border-2  w-[60%]">
+            <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-full max-w-7xl bg-white shadow-lg rounded-lg overflow-hidden md:p-4 sm:w-[90%] xs:w-[95%]">
+                <div className="p-4 border-b">
+                    <h2 className="text-xl font-semibold">Employee Management</h2>
+                </div>
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error}</p>}
-                <table className="w-full table-auto">
-                    <thead>
-                        <tr className="border-b border-slate-500">
-                            <th className="px-6 py-3">S/N</th>
-                            <th className="px-6 py-3">Name</th>
-                            <th className="px-6 py-3">Department</th>
-                            <th className="px-6 py-3">Role</th>
-                            <th className="px-6 py-3">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentItems && currentItems.length > 0 ? (
-                            currentItems.map((user, index) => (
-                                <tr key={user.user_id}>
-                                    <td className="px-6 py-3">{indexOfFirstItem + index + 1}</td>
-                                    <td className="px-6 py-3">{user.name}</td>
-                                    <td className="px-6 py-3">{user.department}</td>
-                                    <td className="px-6 py-3">{user.role}</td>
-                                    <td className="px-6 py-3">
-                                        <button
-                                            onClick={() => handleEditClick(user)}
-                                            className="bg-blue-500 text-white p-2 rounded-lg"
-                                        >
-                                            <FaPen />
-                                        </button>
+                <div className="p-4 overflow-x-auto">
+                    <table className="w-full table-auto border-collapse">
+                        <thead>
+                            <tr className="border-b border-slate-500">
+                                <th className="px-6 py-3 border">S/N</th>
+                                <th className="px-6 py-3 border">Name</th>
+                                <th className="px-6 py-3 border">Department</th>
+                                <th className="px-6 py-3 border">Role</th>
+                                <th className="px-6 py-3 border">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentItems && currentItems.length > 0 ? (
+                                currentItems.map((user, index) => (
+                                    <tr key={user.user_id} className="odd:bg-white even:bg-gray-50">
+                                        <td className="px-6 py-3 border text-center">{indexOfFirstItem + index + 1}</td>
+                                        <td className="px-6 py-3 border text-center">{user.name}</td>
+                                        <td className="px-6 py-3 border text-center">{user.department}</td>
+                                        <td className="px-6 py-3 border text-center">{user.role}</td>
+                                        <td className="px-6 py-3 border text-center">
+                                            <button
+                                                onClick={() => handleEditClick(user)}
+                                                className="bg-blue-500 text-white p-2 rounded-lg"
+                                            >
+                                                <FaPen />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td className="px-6 py-3 border text-center" colSpan="5">
+                                        No employees found
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td className="px-6 py-3" colSpan="5">
-                                    No employees found
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
 
                 {/* Pagination */}
                 <div className="flex justify-center my-4">
