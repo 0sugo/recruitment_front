@@ -8,8 +8,6 @@ export const login = (job_id, password) => async (dispatch) => {
     const token = response.data.authorzation.token;
     const userId = response.data.user_id;
     const role = response.data.roles;
-    console.log(response.data);
-
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userId);
     localStorage.setItem('role', role);
