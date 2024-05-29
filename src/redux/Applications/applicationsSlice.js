@@ -10,7 +10,6 @@ const initialState = {
 export const fetchApplications = createAsyncThunk('fetch/Applications', async (userId) => {
   try {
     const response = await axios.get(`https://sir.magicalfurnitures.co.ke/api/getUserApplications/${userId}`);
-    console.log(response.data)
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -20,7 +19,6 @@ export const fetchApplications = createAsyncThunk('fetch/Applications', async (u
 export const fetchAllApplications = createAsyncThunk('fetch/Applications', async (userId) => {
   try {
     const response = await axios.get(`https://sir.magicalfurnitures.co.ke/api/getAllApplications`);
-    // console.log(response.data)
     return response.data;
   } catch (error) {
     throw new Error(error);
@@ -30,7 +28,6 @@ export const fetchAllApplications = createAsyncThunk('fetch/Applications', async
 export const changeApplicationStatus = createAsyncThunk('applications/changeApplicationStatus', async ({ userId, jobId, status }) => {
   try {
     const response = await axios.post(`https://sir.magicalfurnitures.co.ke/api/jobStatus/${userId}/${jobId}/${status}`);
-    console.log(response.data)
     return response.data;
   } catch (error) {
     throw new Error(error);
