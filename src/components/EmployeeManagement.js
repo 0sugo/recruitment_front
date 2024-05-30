@@ -60,7 +60,7 @@ const EmployeeManagement = () => {
         <div className="relative h-fit bg-gray-100 p-4">
             <Dashboard />
 
-            <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-full max-w-7xl bg-white shadow-lg rounded-lg overflow-hidden md:p-4 sm:w-[90%] xs:w-[95%]">
+            <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-full max-w-7xl bg-white shadow-lg rounded-lg overflow-hidden md:p-4 sm:w-[60%] xs:w-[90%]">
                 <div className="p-4 border-b">
                     <h2 className="text-xl font-semibold">Employee Management</h2>
                 </div>
