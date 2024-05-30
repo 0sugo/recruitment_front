@@ -105,7 +105,7 @@ export const setEmployeeRoles = createAsyncThunk('/updateUser', async (userData,
         'Authorization': `Bearer ${token}`,
       }
     };
-    const response = await axios.put(`${url}/updateUser?user_id=${user_id}&department=${department}&role=${role}`,{}, config);
+    const response = await axios.put(`${url}/updateUser?user_id=${user_id}&department=${department}&role=${role}`, {}, config);
     return response.data;
   } catch (error) {
     // throw new Error('Failed to retrieve Roles');
@@ -187,7 +187,7 @@ export const getMyLeaves = createAsyncThunk('leave/GetPersonalLeaves', async () 
         'Authorization': `Bearer ${token}`,
       }
     };
-    const response = await axios.get(`${url}/getMyLeaves`,config);
+    const response = await axios.get(`${url}/getMyLeaves`, config);
     return response.data;
   } catch (error) {
     throw new Error('Failed to retrieve Leaves');
@@ -203,7 +203,7 @@ export const populateLeaveForm = createAsyncThunk('leave/populateLeaveForm', asy
       }
     };
 
-    const response = await axios.get(`${url}/getLeaveReport/${userId}/${leaveReportId}`, config);
+    const response = await axios.get(`${url}/getLeaveReport/${leaveReportId}`, config);
     return response.data;
   } catch (error) {
     throw new Error('Failed to retrieve Leaves');
