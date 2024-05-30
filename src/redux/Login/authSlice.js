@@ -16,6 +16,7 @@ export const login = (job_id, password) => async (dispatch) => {
     localStorage.setItem('role', role);
     return {token,userId,role} ;
 
+
   } catch (error) {
     dispatch(setError(error.response ? error.response.data.message : 'An error occurred'));
     throw error;

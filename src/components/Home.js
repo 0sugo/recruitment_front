@@ -20,12 +20,12 @@ const Home = () => {
   const user_id = localStorage.getItem('userId');
   const [signatureDataUrl, setSignatureDataUrl] = useState('');
   const profile = localStorage.getItem('profile');
-  
+
   useEffect(() => {
-    if (profile==='new_user'){
+    if (profile === 'new_user') {
 
       setShowModal(true);
-    }else{
+    } else {
       setShowModal(false);
 
     }
@@ -53,7 +53,9 @@ const Home = () => {
     };
 
     dispatch(setupForm(formData));
+    window.location.reload();
     setShowModal(false);
+    
   };
 
   return (
