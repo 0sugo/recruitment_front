@@ -47,7 +47,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App text-xs">
       {/* {userId === 'admin' ? <Admin /> : <Jobs />} */}
       {/* <LoginPage /> */}
       {/* <Dashboard /> */}
