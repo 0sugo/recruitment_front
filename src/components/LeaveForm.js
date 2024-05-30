@@ -177,7 +177,6 @@ const LeaveForm = () => {
                               <option value="">Select one option</option>
                               <option value="male">Male</option>700
                               <option value="female">Female</option>
-                              <option value="other">Prefor Not seay</option>
                             </select>
                           </div>
                         </div>
@@ -229,9 +228,9 @@ const LeaveForm = () => {
                             </label>
                             <select name='leave_type' value={formData.leave_type} required className="border-0 px-2 py-2  text-slate-500 bg-[#f8f6f6] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" >
                               <option value="">Select one option</option>
-                              <option value="4">Sick Leave</option>
+                              <option value="2">Sick Leave</option>
                               <option value="5">Maternity</option>
-                              <option value="6">Annual</option>
+                              <option value="1">Annual</option>
                             </select>
                           </div>
                         </div>

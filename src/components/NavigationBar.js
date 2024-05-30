@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 // Fetch the role from local storage
 const role = localStorage.getItem('role');
 const userId = localStorage.getItem('userId');
+const userExists = localStorage.getItem('profile');
 
 const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
@@ -46,6 +47,12 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
     {
       name: "Promotions",
       icon: BsPersonFillUp,
+      sublistVisible: false,
+      sublist: [],
+    },
+    {
+      name: "Setup",
+      icon: AiFillDashboard,
       sublistVisible: false,
       sublist: [],
     },
