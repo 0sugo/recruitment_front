@@ -70,22 +70,22 @@ const EmployeeManagement = () => {
                     <table className="w-full table-auto border-collapse">
                         <thead>
                             <tr className="border-b border-slate-500">
-                                <th className="px-6 py-3 border">S/N</th>
-                                <th className="px-6 py-3 border">Name</th>
-                                <th className="px-6 py-3 border">Department</th>
-                                <th className="px-6 py-3 border">Role</th>
-                                <th className="px-6 py-3 border">Action</th>
+                                <th className="px-4 py-2 border">S/N</th>
+                                <th className="px-4 py-2 border">Name</th>
+                                <th className="px-4 py-2 border">Department</th>
+                                <th className="px-4 py-2 border">Role</th>
+                                <th className="px-4 py-2 border">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentItems && currentItems.length > 0 ? (
                                 currentItems.map((user, index) => (
                                     <tr key={user.user_id} className="odd:bg-white even:bg-gray-50">
-                                        <td className="px-6 py-3 border text-center">{indexOfFirstItem + index + 1}</td>
-                                        <td className="px-6 py-3 border text-center">{user.name}</td>
-                                        <td className="px-6 py-3 border text-center">{user.department}</td>
-                                        <td className="px-6 py-3 border text-center">{user.role}</td>
-                                        <td className="px-6 py-3 border text-center">
+                                        <td className="px-4 py-2 border text-center">{indexOfFirstItem + index + 1}</td>
+                                        <td className="px-4 py-2 border text-center">{user.name}</td>
+                                        <td className="px-4 py-2 border text-center">{user.department}</td>
+                                        <td className="px-4 py-2 border text-center">{user.role}</td>
+                                        <td className="px-4 py-2 border text-center">
                                             <button
                                                 onClick={() => handleEditClick(user)}
                                                 className="bg-blue-500 text-white p-2 rounded-lg"
@@ -97,7 +97,7 @@ const EmployeeManagement = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td className="px-6 py-3 border text-center" colSpan="5">
+                                    <td className="px-4 py-2 border text-center" colSpan="5">
                                         No employees found
                                     </td>
                                 </tr>

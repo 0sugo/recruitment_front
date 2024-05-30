@@ -66,48 +66,56 @@ console.log(leaveSummary)
             <table className="w-full table-auto border-collapse">
               <thead>
                 <tr className='border-b border-slate-500'>
-                  <th className='px-6 py-3 border text-center'>S/N</th>
-                  <th className='px-6 py-3 border text-center'>Leave Category</th>
-                  <th className='px-6 py-3 border text-center'>Date</th>
-                  <th className='px-6 py-3 border text-center'>Duration</th>
-                  <th className='px-6 py-3 border text-center'>Status</th>
-                  <th className='px-6 py-3 border text-center'>Stage</th>
-                  <th className='px-6 py-3 border text-center'>View</th>
+                  <th className='px-4 py-2 border text-center'>S/N</th>
+                  <th className='px-4 py-2 border text-center'>Leave Category</th>
+                  <th className='px-4 py-2 border text-center'>Date</th>
+                  <th className='px-4 py-2 border text-center'>Duration</th>
+                  <th className='px-4 py-2 border text-center'>Status</th>
+                  <th className='px-4 py-2 border text-center'>Stage</th>
+                  <th className='px-4 py-2 border text-center'>View</th>
                 </tr>
               </thead>
 
               <tbody>
                 {leaveSummary.map((leave, index) => (
                   <tr key={index} className="odd:bg-white even:bg-gray-50">
-                    <td className='px-6 py-3 border text-center' >{leave.leave_type}</td>
-                    <td className='px-6 py-3 border text-center' onClick={() => handlePrint(leave.id)}>{leave.name}</td>
-                    <td className='px-6 py-3 border text-center'>{leave.leave_begins_on}</td>
-                    <td className='px-6 py-3 border text-center'>{leave.num_of_days} days</td>
-                    <td className='px-6 py-3 border text-center'>
-                      {leave.status === 1 ? (
-                        <div className='flex items-center gap-5'>
-                          <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                            <span className='dot'></span>
-                          </span>
-                          <span className='text-black'>Approved</span>
-                        </div>
-                      ) : leave.status === 2 ? (
-                        <div className='flex items-center gap-5'>
-                          <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
-                            <span className='dot'></span>
-                          </span>
-                          <span className='text-black'>Rejected</span>
-                        </div>
-                      ) : (
+                    <td className='px-4 py-2 border text-center' >{leave.leave_type}</td>
+                    <td className='px-4 py-2 border text-center' onClick={() => handlePrint(leave.id)}>{leave.name}</td>
+                    <td className='px-4 py-2 border text-center'>{leave.leave_begins_on}</td>
+                    <td className='px-4 py-2 border text-center'>{leave.num_of_days} days</td>
+                    <td className='px-4 py-2 border text-center'>
+
+                      {leave.status === 0 ? (
                         <div className='flex items-center gap-5'>
                           <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
                             <span className='dot'></span>
                           </span>
                           <span className='text-black'>Pending</span>
                         </div>
+                      ) : leave.status === 1 ? (
+                        <div className='flex items-center gap-5'>
+                          <span className='bg-green-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                            <span className='dot'></span>
+                          </span>
+                          <span className='text-green-400'>Approved</span>
+                        </div>
+                      ) : leave.status === 2 ? (
+                        <div className='flex items-center gap-5'>
+                          <span className='bg-red-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                            <span className='dot'></span>
+                          </span>
+                          <span className='text-red-400'>Rejected</span>
+                        </div>
+                      ) : (
+                        <div className='flex items-center gap-5'>
+                          <span className='bg-orange-600 p-1 text-white rounded-full w-2 h-2 flex items-center justify-center'>
+                            <span className='dot'></span>
+                          </span>
+                          <span className='text-black'>unknown</span>
+                        </div>
                       )}
                     </td>
-                    <td className='px-6 py-3 border text-center'>
+                    <td className='px-4 py-2 border text-center'>
 
                       {leave.stage === 1 ? (
                         <div className='flex items-center gap-5'>
@@ -131,8 +139,8 @@ console.log(leaveSummary)
                         </div>
                       )}
                     </td>
-                    <td className='px-6 py-3 border text-center'>
-                      <div className=' flex items-center justify-between'>
+                    <td className='px-4 py-2 border text-center'>
+                      <div className=' flex justify-between'>
 
                         <ReactToPrint trigger={() => (
                           <button ref={printTriggerRef} style={{ display: 'none' }}>Print</button>

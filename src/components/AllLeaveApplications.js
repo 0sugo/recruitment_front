@@ -87,25 +87,26 @@ const AllLeaveApplications = () => {
           <table className="w-full table-auto border-collapse">
             <thead>
               <tr className="border-b border-slate-500">
-                <th className="px-6 py-3 border">S/N</th>
-                <th className="px-6 py-3 border">Name</th>
-                <th className="px-6 py-3 border">Leave Type</th>
-                <th className="px-6 py-3 border">Num of days</th>
-                <th className="px-6 py-3 border">Applied date</th>
-                <th className="px-6 py-3 border">Action</th>
-                <th className="px-6 py-3 border">Start date</th>
-                {/* <th className="px-6 py-3 border">Stage</th> */}
+                <th className="px-4 py-2 border">S/N</th>
+                <th className="px-4 py-2 border">Name</th>
+                <th className="px-4 py-2 border">Leave Type</th>
+                <th className="px-4 py-2 border">Num of days</th>
+                <th className="px-4 py-2 border">Applied date</th>
+                <th className="px-4 py-2 border">Start date</th>
+                <th className="px-4 py-2 border">Action</th>
+                {/* <th className="px-4 py-2 border">Stage</th> */}
               </tr>
             </thead>
             <tbody>
               {currentItems.map((leave, index) => (
                 <tr key={index} className="odd:bg-white even:bg-gray-50">
-                  <td className="px-6 py-3 border text-center">{index+1}</td>
-                  <td className="px-6 py-3 border text-center">{leave.applicant_name}</td>
-                  <td className="px-6 py-3 border text-center">{leave.leave_type}</td>
-                  <td className="px-6 py-3 border text-center">{leave.num_of_days}</td>
-                  <td className="px-6 py-3 border text-center">{leave.applied_on}</td>
-                  <td className="px-6 py-3 border text-center">
+                  <td className="px-4 py-2 border text-center">{index+1}</td>
+                  <td className="px-4 py-2 border text-center">{leave.applicant_name}</td>
+                  <td className="px-4 py-2 border text-center">{leave.leave_type}</td>
+                  <td className="px-4 py-2 border text-center">{leave.num_of_days}</td>
+                  <td className="px-4 py-2 border text-center">{leave.applied_on}</td>
+                  <td className="px-4 py-2 border text-center">{leave.start_date}</td>
+                  <td className="px-4 py-2 border text-center">
                     <div className="flex items-center justify-center space-x-2">
                       <span
                         onClick={() => handleApprove(leave.id)}
@@ -121,8 +122,7 @@ const AllLeaveApplications = () => {
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-3 border text-center">{leave.start_date}</td>
-                  {/* <td className="px-6 py-3 border text-center">{leave.stage}</td> */}
+                  {/* <td className="px-4 py-2 border text-center">{leave.stage}</td> */}
                 </tr>
               ))}
             </tbody>
