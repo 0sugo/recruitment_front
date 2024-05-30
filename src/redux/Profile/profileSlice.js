@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const token = localStorage.getItem('token');
-const userId = localStorage.getItem('userId');
 
 export const postPersonalDetails = (personalDetails,userId) => async (dispatch) => {
   try {
