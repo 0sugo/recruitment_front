@@ -8,10 +8,14 @@ export const login = (job_id, password) => async (dispatch) => {
     const token = response.data.authorzation.token;
     const userId = response.data.user_id;
     const role = response.data.roles;
+    const userExists = response.data.user_exists;
+    {/** Added the userExists to localStorage */}
+    localStorage.setItem('profile',  userExists);
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userId);
     localStorage.setItem('role', role);
     return {token,userId,role} ;
+
 
   } catch (error) {
     dispatch(setError(error.response ? error.response.data.message : 'An error occurred'));

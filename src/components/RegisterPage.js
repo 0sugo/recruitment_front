@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/Registration/RegistrationSlice';
-import Output from './Output';
 import Dashboard from './Dashboard';
 
 const RegisterPage = ({setSelectedNavItem}) => {

@@ -38,9 +38,10 @@ const LoginPage = ({setSelectedNavItem}) => {
       localStorage.setItem('token', token);
       localStorage.setItem('userId', userId);
 
+
       if (token === 'admin') {
         navigate('/admin');
-      } else {
+      } else if (token){
         navigate('/home');
       }
 

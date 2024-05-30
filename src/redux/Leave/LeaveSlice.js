@@ -44,7 +44,23 @@ export const submitForm = createAsyncThunk('leave/submitForm', async (formData) 
     throw new Error('Failed to submit form');
   }
 });
+// Submit Form Data from Show Modal: Seup Profile
+export const setupForm = createAsyncThunk('leave/createApplicant', async (formData) => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    };
 
+    const response = await axios.post(`${url}/createApplicant`, formData, config);
+
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to submit form');
+  }
+});
 // Get my all Leaves
 export const getLeaves = createAsyncThunk('leave/GetLeaves', async () => {
   try {
