@@ -50,8 +50,7 @@ const LeaveReport = () => {
       printTriggerRef.current.click();
     }
   };
-
-
+console.log(leaveSummary)
   return (
     <div className='relative bg-gray-100 p-4'>
       {loading ? (
@@ -243,16 +242,19 @@ const LeaveReport = () => {
                     )}
                     <div className='flex justify-between'>
                       <div className='flex flex-col justify-between '>
-                        <p>Station: </p>
-                        <p>Designation: </p>
+                        <p >Station: <span className='font-bold'>{formData.hod_station}</span></p>
+                        <p >Designation: <span className='font-bold'>HOD</span></p>
+
+                        <p> </p>
                       </div>
 
                       <div className='flex justify-between'>
                         <div className='flex flex-col justify-between '>
 
-                          <p>Date: </p>
-                          <div className='flex items-end'>
-                            <p className=''>Sign</p>
+                          <p >Date: <span className='font-bold'>{formData.hod_date}</span></p>
+
+                          <div className='flex items-center'>
+                            <p className=''>Sign : </p>
                             <img src={formData.hod_sign} alt="Applicant's Signature" className="w-32" />
                           </div>
                         </div>
@@ -261,12 +263,12 @@ const LeaveReport = () => {
 
                     <h3 className='mx-auto'>PART III</h3>
                     <p className='font-bold italic'>(To be completed by the Principal Secretary where applicable)</p>
-                    <p >This application is: <span className='font-bold'> {formData.ps_date}</span></p>
+                    <p >This application is: <span className='font-bold'> Approved</span></p>
 
                     <div className='flex justify-between'>
-                      <p>Date: </p>
-                      <div className='flex items-end'>
-                        <p className=''>Sign</p>
+                      <p >Date: <span className='font-bold'>{formData.ps_date}</span></p>
+                      <div className='flex items-center'>
+                        <p className=''>Sign : </p>
                         <img src={formData.ps_sign} alt="Applicant's Signature" className="w-32" />
                       </div>
                     </div>
@@ -283,12 +285,16 @@ const LeaveReport = () => {
                       <span>To resume duty on: <span className='font-bold'>{formData.hrmd_to_resume_on}</span></span>
                     </p>
                     <div className='flex justify-between items-end'>
-                      <p>Date: </p>
-                      <p>Designation: </p>
+                      <p >Date: <span className='font-bold'>{formData.hrmd_date}</span></p>
+
+                      <p >Designation: <span className='font-bold'>HR</span></p>
+
                       <div className='flex items-end'>
-                        <p className=''>Sign</p>
+                        <p className=''>Sign : </p>
                         <img src={formData.hrmd_sign} alt="Applicant's Signature" className="w-32" />
                       </div>
+
+
                     </div>
                   </div>
                 </div>
