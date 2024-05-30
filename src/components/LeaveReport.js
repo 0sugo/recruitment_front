@@ -132,19 +132,6 @@ const LeaveReport = () => {
                         </div>
                       )}
                     </td>
-                    {/* <td className='px-6 py-3 border text-center flex gap-2 items-center justify-center'> */}
-                    {/* <AiFillPrinter /> */}
-                    {/* <ReactToPrint trigger={() => <AiFillPrinter className='' ><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} /> */}
-                    {/* <td className='px-6 py-3 border text-center flex gap-2 items-center justify-center'>
-                    <AiFillPrinter />
-                    <CgNotes />
-                  </td> */}
-
-                    {/* <td className='px-6 py-3 border text-center'>
-                      <ReactToPrint trigger={() => <AiFillPrinter className='' onClick={() => handlePrint(leave.id)}><AiFillPrinter /></AiFillPrinter>} content={() => componentRef.current} />
-                      <span><CgNotes /></span>
-                    </td> */}
-
                     <td className='px-6 py-3 border text-center'>
                       <ReactToPrint
                         trigger={() => (
@@ -175,7 +162,7 @@ const LeaveReport = () => {
 
             <div>
               {/* {showModal && <div className="fixed inset-0 z-40 bg-black opacity-25"></div>} */}
-              {isDataReady && formData &&(
+              {isDataReady && formData && (
                 <div className="leave-template mx-24 my-20" ref={componentRef}>
                   <div className="header ">
                     <div className='flex flex-col items-center'>
