@@ -59,7 +59,7 @@ const LeaveReport = () => {
           <ClipLoader color={'#123abc'} loading={loading} size={90} />
         </div>
       ) : (
-        <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-full max-w-7xl bg-white shadow-lg rounded-lg overflow-hidden md:p-4 sm:w-[80%] xs:w-[90%]">
+        <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-full max-w-7xl bg-white shadow-lg rounded-lg overflow-hidden md:p-4 xs:w-[90%]">
           <div className="p-4 border-b">
             <h2 className="text-xl font-semibold">My Applications</h2>
           </div>
@@ -133,14 +133,16 @@ const LeaveReport = () => {
                       )}
                     </td>
                     <td className='px-6 py-3 border text-center'>
-                      <ReactToPrint
-                        trigger={() => (
+                      <div className=' flex items-center justify-between'>
+
+                        <ReactToPrint trigger={() => (
                           <button ref={printTriggerRef} style={{ display: 'none' }}>Print</button>
                         )}
-                        content={() => componentRef.current}
-                      />
-                      <AiFillPrinter className='' onClick={() => handlePrint(leave.id)} />
-                      <span><CgNotes /></span>
+                          content={() => componentRef.current} />
+
+                        <AiFillPrinter className='cursor-pointer' onClick={() => handlePrint(leave.id)} />
+                        <span className='cursor-pointer'><CgNotes /></span>
+                      </div>
                     </td>
                   </tr>
                 ))
