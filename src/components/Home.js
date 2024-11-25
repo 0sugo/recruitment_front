@@ -22,14 +22,14 @@ const Home = () => {
   const profile = localStorage.getItem('profile');
 
   useEffect(() => {
-    if (profile === 'new_user') {
+    if (profile !== 'new_user') {
 
       setShowModal(true);
     } else {
       setShowModal(false);
 
     }
-  }, [10]);
+  }, [1]);
 
   const handleClear = () => {
     signatureRef.current.clear();
@@ -55,7 +55,7 @@ const Home = () => {
     dispatch(setupForm(formData));
     window.location.reload();
     setShowModal(false);
-    
+
   };
 
   return (

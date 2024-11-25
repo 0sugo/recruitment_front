@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { approveRejectHod, approveRejectHrmd, approveRejectPs, getLeaves } from '../redux/Leave/LeaveSlice';
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import Dashboard from './Dashboard';
+import { approveOnBehalfOfPs, hrmdCheckPsProfile } from '../redux/Leave/LeaveSlice';
 import { TiTick } from "react-icons/ti";
 import { MdCancel } from "react-icons/md";
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
-const AllLeaveApplications = () => {
+const ApproveOnBehalf = () => {
   const dispatch = useDispatch();
-  const userId = localStorage.getItem('userId');
   const role = localStorage.getItem('role');
-  const leaveSubjects = useSelector((state) => state.leave.leaves);
+  const userId = localStorage.getItem('userId');
   const [selectedComponent, setSelectedComponent] = useState('PendingLeave');
-  console.log(leaveSubjects);
+  const leaveSubjects = useSelector((state) => state.leave.listForPs);
 
   useEffect(() => {
-    dispatch(getLeaves());
+    dispatch(hrmdCheckPsProfile());
   }, [dispatch]);
 
   const handleApprove = (id) => {
@@ -26,13 +25,9 @@ const AllLeaveApplications = () => {
       rejected: 0,
       recommend_other: 1
     };
-    if (role === 'hod') {
-      dispatch(approveRejectHod(payload));
-    } else if (role === 'ps') {
-      dispatch(approveRejectPs(payload));
-    } else {
-      dispatch(approveRejectHrmd(payload));
-    }
+
+    dispatch(approveOnBehalfOfPs(payload));
+
   };
 
   const handleReject = (id) => {
@@ -43,44 +38,19 @@ const AllLeaveApplications = () => {
       rejected: 1,
       recommend_other: 0
     };
-    if (role === 'hod') {
-      dispatch(approveRejectHod(payload));
-    } else if (role === 'ps') {
-      dispatch(approveRejectPs(payload));
-    } else {
-      dispatch(approveRejectHrmd(payload));
-    }
+    dispatch(approveOnBehalfOfPs(payload));
+
   };
 
+  // console.log(leaveSubjects);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
   const filteredLeaves = leaveSubjects.filter((leave) => {
-    if (role === 'hod') {
-      if (selectedComponent === 'PendingLeave') return leave.status === 0 && leave.stage === 1;
-      if (selectedComponent === 'ApprovedLeave') return  leave.hod_rejected_on === null;
-      if (selectedComponent === 'RejectedLeave') return leave.hod_rejected_on !== null;
-      if (selectedComponent === 'AllLeave') return true;
-    } else if (role === 'ps') {
-      if (selectedComponent === 'PendingLeave') return leave.status === 0 && leave.stage === 2;
-      if (selectedComponent === 'ApprovedLeave') return  leave.ps_rejected_on === null;
-      if (selectedComponent === 'RejectedLeave') return leave.ps_rejected_on !== null;
-      if (selectedComponent === 'AllLeave') return true;
-    } else if (role === 'hrmd') {
-      if (selectedComponent === 'PendingLeave') return leave.status === 0 && leave.stage === 3;
-      if (selectedComponent === 'ApprovedLeave') return leave.hrmd_rejected_on === null;
-      if (selectedComponent === 'RejectedLeave') return leave.hrmd_rejected_on !== null;
-      if (selectedComponent === 'AllLeave') return true;
-    } else {
-      // Handle other roles or default behavior if necessary
-      if (selectedComponent === 'PendingLeave') return leave.status === 0;
-      if (selectedComponent === 'ApprovedLeave') return leave.status === 1;
-      if (selectedComponent === 'RejectedLeave') return leave.status === 2;
-      if (selectedComponent === 'AllLeave') return true;
-    }
-    return true; // Default to return true for any unmatched case
+    if (selectedComponent === 'PendingLeave') return leave.status === 0 && leave.stage === 2;
+    if (selectedComponent === 'ApprovedLeave') return leave.ps_rejected_on === null;
+    if (selectedComponent === 'RejectedLeave') return leave.ps_rejected_on !== null;
+    if (selectedComponent === 'AllLeave') return true;
   });
-
 
   const totalPages = Math.ceil(filteredLeaves.length / itemsPerPage);
 
@@ -100,7 +70,6 @@ const AllLeaveApplications = () => {
     setSelectedComponent(component);
     setCurrentPage(1);
   };
-
   return (
     <div className="relative h-fit bg-gray-100 p-4">
       <Dashboard />
@@ -196,7 +165,7 @@ const AllLeaveApplications = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AllLeaveApplications;
+export default ApproveOnBehalf

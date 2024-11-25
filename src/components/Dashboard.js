@@ -80,7 +80,7 @@ const Dashboard = () => {
             {selectedNavItem === 'Profile' && selectedNav2Item === 'workExperience' && <WorkExperience isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
             {selectedNavItem === 'Profile' && selectedNav2Item === 'referees' && <Referees isOpen={isOpen} selectedNav2Item={selectedNav2Item} />}
             {/** Employee Management */}
-            {selectedNavItem === 'Employee Management' && <EmployeeManagement />}
+            {/* {selectedNavItem === 'Employee Management' && <EmployeeManagement />} */}
 
           </div>
         </div>

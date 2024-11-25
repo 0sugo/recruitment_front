@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   error: null,
   leaves: [],
+  listForPs: [],
 };
 
 const url = `https://sir.magicalfurnitures.co.ke/api`;
@@ -172,6 +173,43 @@ export const approveRejectPs = createAsyncThunk('/ApproveRejectLeavePs', async (
     throw new Error('Failed to retrieve Roles');
   }
 });
+// Approve on Behalf of PS
+export const approveOnBehalfOfPs = createAsyncThunk('/ApproveOnBehalfRejectLeavePs', async (payload) => {
+  const { user_id, leave_app_id, approved, rejected, recommend_other } = payload;
+
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    const response = await axios.put(`${url}/approveOnBehalfOfPs`, {
+      user_id,
+      leave_app_id,
+      approved,
+      rejected,
+      recommend_other
+    }, config);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Roles');
+  }
+});
+// Get PS List
+export const hrmdCheckPsProfile = createAsyncThunk('/hrmdCheckProfile', async (payload) => {
+  try {
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    };
+    const response = await axios.get(`${url}/hrmdCheckPsProfile`, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to retrieve Roles');
+  }
+});
 
 export const approveRejectHrmd = createAsyncThunk('/ApproveRejectLeaveHrmd', async (payload) => {
   const { user_id, leave_app_id, approved, rejected, recommend_other } = payload;
@@ -318,6 +356,23 @@ const formSlice = createSlice({
     });
 
     builder.addCase(getEmployeeRoles.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+
+    // Get Ps Listin order to approve on behalf of
+    builder.addCase(hrmdCheckPsProfile.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builder.addCase(hrmdCheckPsProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.listForPs = action.payload;
+    });
+
+    builder.addCase(hrmdCheckPsProfile.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     });

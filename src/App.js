@@ -25,17 +25,20 @@ import Dashboard from './components/Dashboard';
 import LeaveReport from './components/LeaveReport';
 import EmployeeManagement from './components/EmployeeManagement';
 import Home from './components/Home';
-import { getEmployeeRoles } from './redux/Leave/LeaveSlice';
+import { getEmployeeRoles, hrmdCheckPsProfile } from './redux/Leave/LeaveSlice';
 import { useDispatch } from 'react-redux';
 import AllLeaves from './components/AllLeaves';
 import AllLeaveApplications from './components/AllLeaveApplications';
+import ApproveOnBehalf from './components/ApproveOnBehalf';
 
 function App() {
 
   const [userId, setUserId] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getEmployeeRoles());
+    // dispatch(getEmployeeRoles());
+    dispatch(hrmdCheckPsProfile());
+
   }, [dispatch]);
 
 
@@ -77,6 +80,7 @@ function App() {
         <Route path="/AllLeaves" element={<AllLeaves />} />
         <Route path="/AllLeaveApplications" element={<AllLeaveApplications />} />
         <Route path="/EmployeeManagement" element={<EmployeeManagement />} />
+        <Route path="/ApproveOnBehalf" element={<ApproveOnBehalf />} />
       </Routes>
 
       {/* <Footer /> */}

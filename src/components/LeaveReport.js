@@ -50,7 +50,7 @@ const LeaveReport = () => {
       printTriggerRef.current.click();
     }
   };
-console.log(leaveSummary)
+
   return (
     <div className='relative bg-gray-100 p-4'>
       {loading ? (
@@ -271,7 +271,7 @@ console.log(leaveSummary)
 
                     <h3 className='mx-auto'>PART III</h3>
                     <p className='font-bold italic'>(To be completed by the Principal Secretary where applicable)</p>
-                    <p >This application is: <span className='font-bold'> Approved</span></p>
+                    <p >This application is: <span className='font-bold'> {`Approved by ${formData.ps_approved_by}`}</span></p>
 
                     <div className='flex justify-between'>
                       <p >Date: <span className='font-bold'>{formData.ps_date}</span></p>

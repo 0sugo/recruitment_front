@@ -22,13 +22,12 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
   // Define role-based sublist items
   const roleBasedSublists = {
     employee: ['My Applications'],
-    hrmd: ['My Applications', 'All Applications', 'Employee Management'],
+    hrmd: ['My Applications', 'All Applications', 'Employee Management','Approve On Behalf'],
     hod: ['My Applications', 'All Applications'],
     ps: ['My Applications', 'All Applications'],
     admin: ['My Applications', 'Employee Management', 'All Leaves','All Applications']
   };
 
-  // Determine the allowed sublist items for the current role
   const allowedSublists = roleBasedSublists[role] || [];
 
   const [navItems, setNavItems] = useState([
@@ -108,7 +107,9 @@ const NavigationBar = ({ setAdminChoice, onNavItemSelect, isOpen, setIsOpen }) =
     else if (subName === 'All Applications') {
       navigate("/AllLeaveApplications");
     }
-
+    else if (subName === 'Approve On Behalf') {
+      navigate("/ApproveOnBehalf");
+    }
     else if (subName === 'All Leaves') {
       navigate(`/allLeaves`);
     }
